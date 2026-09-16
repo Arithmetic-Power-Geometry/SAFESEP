@@ -1,0 +1,4 @@
+case,experiment,cost,globally_admissible,expected_role
+adaptive_safe,safe_metadata_probe,1.0,true,cheapest admissible informative probe that leaves one decision-incompatible branch
+adaptive_safe,branch_probe,1.0,false,becomes admissible only after safe_metadata_probe removes w1
+minimal_deadlock,protected_probe,1.0,false,unconstrained resolver unavailable under current authority
