@@ -1,0 +1,5 @@
+n,worlds,system,q_cost,q_unresolved_branches,worst_incompatible_pairs,info_branch_sizes,authority_edges,residual_resolvable,data_type
+100,200,A,1,1,9900,"1;199",2,true,controlled_structural
+100,200,B,1,1,9900,"1;199",2,false,controlled_structural
+5000,10000,A,1,1,24995000,"1;9999",2,true,controlled_structural
+5000,10000,B,1,1,24995000,"1;9999",2,false,controlled_structural
