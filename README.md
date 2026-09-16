@@ -13,7 +13,7 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** Across current constructions the diagnostic remains `q`, cost 1. It leaves 9,900 incompatible pairs at 200 worlds and 24,995,000 at the controlled 10,000-world scale.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent/epistemic planning, world-dependent applicability, history/provenance authorization, proof-carrying authorization, trust negotiation, runtime access-policy discovery, cyclic credentials, cyclic policy interdependency, recursive authorization/fixed-point closure, dynamic evidence gathering, joint information-authority state representation, minimal credential disclosure, generic cost-sensitive trust negotiation, pair separation, minimum test cover, decision-region edge cutting, generic planning landmarks, generic unavoidable-deadend reasoning, dynamic authorization-state updates, observation-conditioned authority-state transitions, or merely treating the applicable policy identifier as latent state.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent/epistemic planning, world-dependent applicability, history/provenance authorization, proof-carrying authorization, trust negotiation, runtime access-policy discovery, cyclic credentials, cyclic policy interdependency, recursive authorization/fixed-point closure, dynamic evidence gathering, joint information-authority state representation, minimal credential disclosure, generic cost-sensitive trust negotiation, pair separation, minimum test cover, decision-region edge cutting, generic planning landmarks, generic unavoidable-deadend reasoning, dynamic authorization-state updates, observation-conditioned authority-state transitions, latent policy identity, or generic context-dependent/nonmonotonic rule validity.
 
 ## Structural results retained
 Matched information/authority marginals do not determine joint resolvability, but full joint-state planning can encode the missing alignment. The authorization-safe evidence premium quantifies extra legitimate cost, but disclosure-cost optimization is established. Static pair cuts reduce to test-cover/DRD structure after filtering unavailable tests.
@@ -31,32 +31,21 @@ Tests 57–60 match initial worlds, decisions, cheapest probe, cost, and initial
 Tests 61–64 make the applicable authorization policy latent. q remains cost 1 and leaves incompatible decisions plus multiple policy hypotheses. Runtime policy discovery and state augmentation already cover the generic mechanism, so unknown-policy state alone is not novel.
 
 ## Self-referential evidence-legitimacy attack
-Tests 65–68 examine a stronger circle: evidence E is needed to justify policy P, while release/acquisition of E is governed by P. Without an independently grounded seed, least-fixed-point closure contains neither P nor E; with a seed, the cycle resolves. The cheapest unresolved experiment is still q, cost 1, leaving 9,900 incompatible pairs at 200 worlds and 24,995,000 at 10,000 worlds. This also collides with established automated-trust-negotiation work on protected credentials and cyclic policy/credential dependencies, so it is retained as a negative boundary result rather than a breakthrough claim.
+Tests 65–68 examine a stronger circle: evidence E is needed to justify policy P, while release/acquisition of E is governed by P. Without an independently grounded seed, least-fixed-point closure contains neither P nor E; with a seed, the cycle resolves. This collides with established automated-trust-negotiation work on cyclic policy/credential dependencies.
+
+## Rule-validity coupling attack
+Tests 69–72 ask whether matched coarse rule-validity marginals plus different world/rule alignment can separate safe resolvability. They cannot under branchwise universal legitimacy: after q=rest, both constructions retain at least one world in which the resolver's rule is invalid. This is a useful negative result because it prevents us from promoting mere correlation between worlds and policy validity as a breakthrough. Context-dependent, incomplete, conflicting and nonmonotonic authorization policies are already established.
 
 ## Certificate vs full planner
 `certificate_pruning.py` independently instruments full joint-state search. The corrected authorization-cut certificate agrees with full search on parameterized OPEN/BLOCKED witnesses, but its exact check itself performs restricted AND/OR reasoning; no asymptotic advantage is claimed.
 
 ## Datasets and empirical boundary
-Controlled theorem datasets include `large_authorization_benchmark.csv`, `dynamic_proof_coupling.csv`, `evidence_authority_closure.csv`, `joint_coupling_matched_marginals.csv`, `joint_planning_collision.csv`, `authority_premium.csv`, `legitimate_pair_cut.csv`, `dynamic_authority_cut.csv`, `certificate_planner_comparison.csv`, `ocat_collision.csv`, `policy_uncertainty.csv`, and `self_referential_legitimacy.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks do not natively provide the counterfactual rule-legitimacy/protected-evidence labels required here; we do not fabricate them.
+Controlled theorem datasets include `large_authorization_benchmark.csv`, `dynamic_proof_coupling.csv`, `evidence_authority_closure.csv`, `joint_coupling_matched_marginals.csv`, `joint_planning_collision.csv`, `authority_premium.csv`, `legitimate_pair_cut.csv`, `dynamic_authority_cut.csv`, `certificate_planner_comparison.csv`, `ocat_collision.csv`, `policy_uncertainty.csv`, `self_referential_legitimacy.csv`, and `rule_validity_coupling.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks do not natively provide counterfactual world-indexed rule-validity or justification labels; we do not fabricate them.
 
 ## Test registry
 1–40. Previous SAFESEP regression and collision tests retained unchanged.
-41. Authority-premium cheapest experiment — q, cost 1; 9,900 residual incompatible pairs.
-42. Finite authorization premium — unconstrained 1 versus legitimate 2.
-43. Infinite authorization premium under obstruction.
-44. 10,000-world authority-premium stress.
-45. Legitimate pair-cut cheapest probe.
-46. Static uncovered-pair obstruction.
-47. Raw-information equality / usable-cover separation.
-48. 10,000-world pair-cut stress.
-49. Dynamic-cut cheapest probe — q, cost 1, 9,900 residual incompatible pairs.
-50. Corrected dynamic mandatory-cut deadlock certificate.
-51. Certificate rejection on OPEN system after q grants alpha.
-52. 10,000-world dynamic-cut structural stress.
-53. Cheapest-probe preservation after CI correction — q, cost 1, 9,900 pairs.
-54. Corrected cut semantics regression — BLOCKED certifies; OPEN does not.
-55. Certificate/full-planner agreement — parameterized comparison through n=30.
-56. 10,000-world certificate/planner structural stress — 24,995,000 residual pairs.
+41–48. Authority-premium and legitimate-pair-cut tests retained.
+49–56. Corrected dynamic-cut and full-planner comparison tests retained.
 57. OCAT cheapest unresolved probe — q, cost 1; 9,900 residual pairs.
 58. Matched initial authority topology.
 59. Observation-conditioned topology separation/full-state collision.
@@ -65,13 +54,17 @@ Controlled theorem datasets include `large_authorization_benchmark.csv`, `dynami
 62. Policy-as-latent-state regression.
 63. Joint decision/policy uncertainty after q.
 64. 10,000-world second-order stress — 24,995,000 residual pairs.
-65. **Self-referential cheapest unresolved probe** — q, cost 1; 9,900 residual incompatible pairs.
-66. **Unseeded policy/evidence cycle** — least-fixed-point closure does not bootstrap P or E.
-67. **External legitimacy seed** — breaks the cycle and restores resolution.
-68. **10,000-world self-reference stress** — q cost 1; 24,995,000 residual incompatible pairs.
+65. Self-referential cheapest unresolved probe — q, cost 1; 9,900 residual incompatible pairs.
+66. Unseeded policy/evidence cycle — least-fixed-point closure does not bootstrap P or E.
+67. External legitimacy seed — breaks the cycle and restores resolution.
+68. 10,000-world self-reference stress — q cost 1; 24,995,000 residual incompatible pairs.
+69. **Rule-validity cheapest unresolved probe** — q, cost 1; 9,900 residual incompatible pairs.
+70. **Matched coarse rule-validity summaries** — same worlds, decisions, q partition, costs, and validity counts.
+71. **Naive world/rule alignment negative result** — neither matched construction satisfies branchwise universal legitimacy.
+72. **10,000-world rule-validity stress** — q cost 1; 24,995,000 residual incompatible pairs with matched validity marginals.
 
 ## Current novelty status
-**Do not write the paper yet.** Self-referential evidence legitimacy in the simple P↔E form collides directly with established cyclic credential/policy dependencies in automated trust negotiation and recursive trust management. The next candidate must match dependency graph, SCCs, least-fixed-point closure, costs, and ordinary information partitions while differing in safe separability because the validity of the justification rule itself is world-dependent. That candidate must survive nonmonotonic authorization logics, policy-combining/conflict semantics, epistemic planning, and trust negotiation.
+**Do not write the paper yet.** Simple world-dependent rule validity is both already represented in context-dependent/nonmonotonic authorization and insufficient to create our desired matched-system separation under SAFESEP's universal branch legitimacy. The next candidate is justification non-equivalence: systems that agree extensionally on authorization decisions, policy validity marginals, dependency graphs and information partitions but differ in whether the same authorization conclusion has a non-circular admissible justification. This must survive argumentation/nonmonotonic proof semantics, proof-carrying authorization, provenance, trust management and epistemic planning.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
