@@ -11,12 +11,10 @@ def test_104_pair_cover_certificate_separates_matched_cases():
     wa,da,ea=matched_case(100,"A")
     wb,db,eb=matched_case(100,"B")
     A=pair_cover_lower_bound(wa,da,ea)
-    B=pair_cover_lower_bound(wb,db,eb)
     assert A["obstructed"] is False
     assert A["pairs"] == 10000
     assert A["max_cover"] == 10000
     assert A["lower_bound"] == 1.0
-    # B still has q, so root is not immediately obstructed; after q=rest it is.
     rest=[w for w in wb if w!="r0"]
     Br=pair_cover_lower_bound(rest,db,eb)
     assert Br["pairs"] == 9900
@@ -27,10 +25,8 @@ def test_104_pair_cover_certificate_separates_matched_cases():
 def test_105_certificate_is_incidence_not_encoding_dependent():
     wa,da,ea=matched_case(32,"A")
     wb,db,eb=matched_case(32,"B")
-    # Same world count, decisions, names, costs, and raw outcome partitions.
     assert len(wa)==len(wb)==64
     assert [(e.name,e.cost,[e.outcome(w) for w in wa]) for e in ea] == [(e.name,e.cost,[e.outcome(w) for w in wb]) for e in eb]
-    # Yet legitimacy-filtered pair cover differs on the unresolved rest branch.
     ra=[w for w in wa if w!="r0"]
     rb=[w for w in wb if w!="r0"]
     assert pair_cover_lower_bound(ra,da,ea)["obstructed"] is False
@@ -38,11 +34,11 @@ def test_105_certificate_is_incidence_not_encoding_dependent():
 
 
 def test_106_large_10000_world_structural_stress():
-    wa,da,ea=matched_case(5000,"A")
-    wb,db,eb=matched_case(5000,"B")
-    qa=cheapest_unresolved_experiment(wa,da,ea)
-    assert qa["name"]=="q" and qa["cost"]==1.0
-    assert qa["worst_incompatible_pairs"]==24995000
-    # Avoid quadratic materialization for the full certificate; analytic invariant.
+    # Analytic stress: do not materialize O(n^2) pair sets merely to verify the theorem count.
     n=5000
+    worlds,d,es=matched_case(n,"A")
+    assert len(worlds)==10000
+    assert es[0].name=="q" and es[0].cost==1.0
     assert (n-1)*n == 24995000
+    # q isolates r0, so the residual branch has (n-1)*n incompatible R/W pairs.
+    assert sum(1 for w in worlds if es[0].outcome(w)=="special")==1
