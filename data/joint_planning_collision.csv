@@ -1,0 +1,6 @@
+n,worlds,cheapest_experiment,cost,unresolved_branches,worst_incompatible_pairs,separate_marginals_match,full_joint_signature_match,A_combined_planner_resolvable,B_combined_planner_resolvable
+50,100,q,1,1,2450,true,false,true,false
+100,200,q,1,1,9900,true,false,true,false
+500,1000,q,1,1,249500,true,false,true,false
+1000,2000,q,1,1,999000,true,false,true,false
+5000,10000,q,1,1,24995000,true,false,true,false
