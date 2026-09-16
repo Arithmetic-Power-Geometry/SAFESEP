@@ -33,8 +33,11 @@ Tests 107–122 make the certificate dynamic over joint states `(C,A)`, includin
 ## Authorization pair-flow lower-bound attack
 Tests 123–138 define incompatible-pair mass `M(C)` and worst-branch legitimate pair reduction. They test local counting, filtering, invariances, cost scaling, parameter sweeps and 10,000-world stress. CI also produced a scientifically important correction: bit probes beat q at equal cost in this family. A root-only capacity ceiling is not a general dynamic SAFESEP theorem because authority-changing transitions may unlock later high-capacity actions. See `results/PAIR_FLOW_LOWER_BOUND.md`.
 
+## Legitimacy obstruction certificate
+Tests 139–146 convert branchwise resolver legitimacy into an exact obstruction witness. With candidate resolvers E, define A_w as the resolvers blocked in world w. No common legitimate resolver exists exactly when the union of A_w covers E; the minimum witness-world certificate is therefore the minimum set-cover size. The controlled 10,000-world stress has 5,000 resolvers, each sampled world permits 4,999, yet the branch has no common resolver and an explicit 5,000-world blocker certificate. This exact identity is retained as SAFESEP machinery, not claimed as new Set Cover theory. See `results/LEGITIMACY_OBSTRUCTION_CERTIFICATE.md`.
+
 ## Datasets and empirical boundary
-Controlled theorem datasets scale through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks audited so far do not natively provide counterfactual world×experiment legitimacy and authority-transition semantics; we do not fabricate such labels.
+Controlled theorem datasets scale through 10,000 worlds, including `legitimacy_obstruction_scaling.csv`. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks audited so far do not natively provide counterfactual world×experiment legitimacy and authority-transition semantics; we do not fabricate such labels.
 
 ## Test registry
 1–122. Prior SAFESEP regression, collision, closure, coupling, dynamic-flow and large-scale tests retained.
@@ -54,9 +57,17 @@ Controlled theorem datasets scale through 10,000 worlds. `real_authorization_sou
 136. **Uniform cost scaling** — step bound invariant; cost bound scales exactly.
 137. **10,000-world CI-corrected cheapest unresolved stress** — `bit0`, cost 1, leaves 6,250,000 incompatible pairs.
 138. **10,000-world q invariant** — root mass 25,000,000; q reduction 5,000 and residual 24,995,000.
+139. **Common-resolver positive boundary** — common legitimacy yields no obstruction certificate.
+140. **Single-world obstruction** — one world can block every candidate resolver.
+141. **Exact cover identity** — minimum blocker worlds equal the exact absence-set cover size.
+142. **Local permissiveness/global obstruction** — every world permits n-1 resolvers while the full branch permits none commonly.
+143. **Obstruction-number sweep** — exact certificate size n for n=2..12 matched family.
+144. **Scalable greedy certificate** — 128-resolver witness is generated and independently verified.
+145. **Renaming/order invariance** — obstruction number is representation independent.
+146. **10,000-world structural obstruction** — 5,000 resolvers, 4,999 locally legitimate per sampled world, no common resolver, verified 5,000-world certificate.
 
 ## Current novelty status
-**Do not write the paper yet.** The CI failure is retained as evidence that the diagnostic must be computed rather than inherited from a previous construction. The next stop-and-write candidate remains a sound state-dependent potential/cut theorem over reachable joint states `(C,A)`, tested against exact joint-state search on exhaustive small systems and randomized adversarial instances.
+**Do not write the paper yet.** Tests 139–146 give an exact and compactly stated authorization-incidence obstruction identity, but its computational core is Set Cover and its universal-applicability semantics still collide with trust negotiation and belief-state planning. The next stop-and-write candidate is a recursive certificate coupling (i) decision-incompatible pair separation and (ii) legitimacy obstruction over reachable joint states, with soundness checked against exact joint-state search when token-only transitions unlock later probes.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
