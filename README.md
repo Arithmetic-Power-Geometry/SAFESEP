@@ -2,42 +2,37 @@
 
 **Copyright (C) 2026 Mohammad Amir Khusru Akhtar**
 
-SAFESEP is a formal and reproducible research framework for deciding whether an autonomous AI agent can resolve an authorization decision using only evidence-gathering actions whose authorization does not improperly presuppose the unresolved decision.
+SAFESEP is a formal and reproducible research framework for deciding whether an autonomous AI agent can resolve an authorization decision using only evidence-gathering actions whose authorization is itself legitimately justified.
 
 > **Know enough to grant — but never grant to know.**
 
 ## Core question
-Given compatible worlds `C` requiring potentially different authorization decisions, SAFESEP asks whether adaptive evidence can reach a decision-homogeneous branch while every probe is itself legitimately authorized.
+Given compatible worlds `C` requiring potentially different authorization decisions, can adaptive evidence reach a decision-homogeneous branch while every evidence probe is authorized without improperly presupposing the unresolved decision?
 
 ## Cheapest-experiment diagnostic
-We explicitly test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective. The original matched family has the same cheapest safe informative root probe `e1`, cost 1, one incompatible branch and `n(n-1)` worst-case incompatible pairs, yet `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
+We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective.
 
-The new decision-neutral construction asks the same question under a stronger criterion: a probe must be authorized without presupposing which unresolved authorization decision is correct. Its cheapest such probe is `q`, cost 1; `q` is informative but deliberately leaves a decision-critical residual branch.
+In the original matched family, both systems have the same cheapest safe informative root probe `e1`, cost 1, one incompatible branch and `n(n-1)` worst-case incompatible pairs, yet `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
 
-## Prior-art collisions already established
-When experiments are universally admissible the target reduces to Equivalence Class Determination. Strong contingent planning can encode the original finite SAFESEP model. Belief-relative admissibility can be encoded as epistemic action preconditions. Therefore adaptive sensing, decision-class stopping, fixed state-dependent admissibility, AND/OR belief search, cheapest-probe selection and knowledge-relative preconditions are not claimed as foundational novelties.
+Under the stronger decision-neutral criterion, the cheapest eligible unresolved probe is `q`, cost 1. It is informative but deliberately leaves a decision-critical residual branch.
 
-The JRSS provenance/history direction also substantially collides with established work: history-based access control makes authorization depend on prior security-sensitive events; purpose/consent models use purpose and conditions; proof-carrying authorization supports distributed proof search, sessions and iterative challenges; automated trust negotiation protects credentials by policies and explicitly studies cyclic credential-disclosure dependencies; provenance-aware authorization and evidential transaction logics likewise make provenance/evidence part of authorization. Consequently SAFESEP does **not** claim that history, provenance, purpose, consent, delegation, proof-carrying authorization or circular credential disclosure is new. See `docs/DECISION_NEUTRAL_AUTHORITY_CLOSURE.md`.
+## Prior-art collisions established
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent planning, epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, non-circular authorization proofs, or well-founded authorization semantics.
 
-## Surviving candidate: Decision-Neutral Authority Closure
-Let `C` be decision-critical. A probe `e` is **decision-neutral admissible on C** when its authorization basis is valid without presupposing which of the mutually incompatible decisions represented in `C` is correct.
+The latest attack is important: the local Decision-Neutral Authority Closure check can be compiled into ordinary authorization-proof dependency analysis when proof premises are explicit. `src/safesep/proof_neutral.py` implements this collision. A probe is locally neutral when at least one valid authorization proof avoids every disputed decision premise. Therefore **local no-presupposition checking itself is not our breakthrough**. See `docs/PROOF_NEUTRALITY_COLLISION.md`.
 
-This is stronger than extensional applicability. A probe can happen to be permitted in every actual world while still be unusable as a legitimate resolver when the only argument authorizing it assumes the very conclusion it is intended to establish.
+## Surviving target: Decision-Relative Authority Closure (DRAC)
+The remaining candidate is the coupled adaptive problem. Let `C` be decision-critical. Each evidence probe may have multiple authorization proofs. A probe is eligible only if at least one proof is independent of the unresolved decision. Observations change `C`, which can change both the information problem and the relevant authorization-proof landscape. The objective is a minimum-cost adaptive tree ending at decision-homogeneous leaves.
 
-Define `DN-SafeSep(C)` as the minimum worst-case cost of an adaptive decision-neutral probe tree ending at decision-homogeneous leaves; infinity means no such tree exists. The executable prototype is `src/safesep/decision_neutral.py`.
-
-### Matched no-presupposition separation
-The new construction fixes worlds, decisions, probe outcomes, costs and ordinary information structure. The resolver is informationally identical in both systems. In one system it has a decision-independent authorization basis; in the other its authorization basis presupposes the disputed decision. The first is decision-neutrally separable and the second is not.
-
-This is a **surviving theorem candidate**, not yet a breakthrough claim. A general planner can encode an extra predicate; the candidate contribution is the authorization principle and its structural consequences, not raw representational impossibility.
+The potentially novel object is therefore not proof acyclicity alone but **adaptive authorization resolution under proof-qualified evidence acquisition**. This remains a candidate until a coupling-specific theorem survives the remaining prior-art attack.
 
 ## Datasets and empirical boundary
 - `data/cheapest_experiment_cases.csv` — cheapest-probe cases.
 - `data/parameterized_irreducibility.csv` — matched family through 100 worlds.
-- `data/large_authorization_benchmark.csv` — controlled benchmark from 200 through 10,000 explicit worlds.
-- `data/real_authorization_source_audit.csv` — explicit coverage audit separating real authorization data from the counterfactual fields required by SAFESEP.
+- `data/large_authorization_benchmark.csv` — controlled theorem benchmark from 200 through 10,000 explicit worlds.
+- `data/real_authorization_source_audit.csv` — real-vs-controlled coverage audit.
 
-AuthBench is a real public agent-authorization benchmark with permission-generation/replay infrastructure; the Amazon employee-access dataset is a large real access dataset. Neither natively supplies the counterfactual world × evidence-probe admissibility plus decision-independent-justification labels required to estimate DN-SafeSep. We therefore use them as external-validity/coverage sources and do not fabricate missing ground truth. The 10,000-world controlled benchmark remains the theorem stress test.
+AuthBench is now verified directly from its public repository: **120 tasks, 80 standard + 40 sensitive, 10 categories**, gold read/write/execute permissions, and real constrained execution. This is useful external-validity evidence, but AuthBench does not provide alternative authorization-proof graphs or labels saying whether a proof depends on the disputed authorization conclusion. We do not fabricate those missing fields. The 10,000-world controlled benchmark remains the theorem stress test.
 
 ## Test registry
 1. Minimal authorization deadlock.
@@ -60,14 +55,17 @@ AuthBench is a real public agent-authorization benchmark with permission-generat
 18. Cheapest-probe collision survives planning reduction through n=50.
 19. Matched-belief justification-provenance separation.
 20. Cheapest-information invariance under provenance split.
-21. **Cheapest decision-neutral probe leaves incompatible worlds** — verifies `q` is the cheapest legitimate informative probe at cost 1 on a 200-world instance.
-22. **Decision-neutral authority-closure separation** — identical information structure but finite/infinite neutral resolvability depending only on whether resolver authorization presupposes the disputed decision.
-23. **10,000-world decision-neutral scale test** — repeats the separation on 5,000 READ + 5,000 WRITE worlds without enumerating all incompatible pairs.
+21. Cheapest decision-neutral probe leaves incompatible worlds — `q`, cost 1, on 200 worlds.
+22. Decision-neutral authority-closure separation.
+23. 10,000-world decision-neutral scale test.
+24. **All resolver proofs decision-tainted** — proof-dependency compilation reproduces the DNAC obstruction.
+25. **Independent alternative-proof restoration** — one decision-independent proof restores eligible resolution even when another proof is circular/tainted.
+26. **10,000-world proof-neutrality compilation** — the proof-dependency baseline reproduces the obstruction at scale.
 
 ## Current novelty status
-We are closer, but have not yet reached the stop point. The strongest survivor is no longer provenance itself; it is **decision-neutral authorization of evidence acquisition**: extensional permission should not count as a resolving authority when its justification presupposes the unresolved authorization conclusion. Exact phrase searches did not reveal a direct SAFESEP/DNAC formulation, but adjacent trust-management and proof systems are expressive enough that a deeper comparison is mandatory.
+**Do not stop yet.** The non-circular-proof attack narrows the claim again. Existing authorization logics and proof-carrying systems already provide proof-of-compliance, distributed proof construction, and mechanisms/restrictions for cyclic dependencies; trust negotiation explicitly studies circular credential dependencies. The surviving question is whether the *coupling* of minimum-cost adaptive evidence selection, decision-relative stopping, and proof-qualified authorization of the evidence itself yields a theorem or complexity separation not inherited from those ancestors.
 
-The next decisive attack is against non-circular proof theory, recursive authorization/trust-management logics, well-founded semantics and justification logic. If those already impose an equivalent no-presupposition condition, we narrow again. If they do not, the next target is a formal non-circularity theorem plus a reduction/separation result; that is the intended stop-and-write threshold.
+The next stop-and-write threshold is: prove one coupling-specific result—ideally a reduction/separation or complexity theorem—and attack it against proof-carrying authorization, trust negotiation, authorization logic, contingent/epistemic planning and adaptive diagnosis. If it survives, we stop novelty hunting and write the paper.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and narrow claims after every collision.
