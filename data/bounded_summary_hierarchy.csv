@@ -1,0 +1,6 @@
+worlds,n,k,cheapest_experiment,cost,worst_incompatible_pairs,local_summaries_match_through_k,A_resolvable,B_resolvable,data_type
+200,100,8,q,1,9900,true,true,false,controlled_theorem
+1000,500,16,q,1,249500,true,true,false,controlled_theorem
+2000,1000,32,q,1,999000,true,true,false,controlled_theorem
+5000,2500,64,q,1,6247500,true,true,false,controlled_theorem
+10000,5000,128,q,1,24995000,true,true,false,controlled_theorem
