@@ -12,10 +12,12 @@ def test_124_pair_mass_binary_exact():
     assert incompatible_pair_mass(ws,d)==10000
 
 
-def test_125_cheapest_unresolved_q_200():
+def test_125_cheapest_unresolved_is_actually_computed_200():
     ws,d,acts=balanced_family(100)
     x=cheapest_unresolved_experiment(ws,d,acts)
-    assert x["name"]=="q" and x["cost"]==1.0 and x["worst_incompatible_pairs"]==9900
+    # CI falsified the earlier hard-coded q claim: bit probes are cheaper under tie-breaking
+    # because they leave a much smaller incompatible branch at the same unit cost.
+    assert x["name"]=="bit0" and x["cost"]==1.0 and x["worst_incompatible_pairs"]==2500
 
 
 def test_126_q_reduction_exact_200():
@@ -72,10 +74,7 @@ def test_133_q_formula_sweep():
 
 def test_134_renaming_invariance():
     ws,d,acts=balanced_family(32)
-    base=pair_flow_lower_bound(ws,d,acts)
-    # Reverse world order: semantic result must not depend on representation order.
-    rev=pair_flow_lower_bound(list(reversed(ws)),d,acts)
-    assert base==rev
+    assert pair_flow_lower_bound(ws,d,acts)==pair_flow_lower_bound(list(reversed(ws)),d,acts)
 
 
 def test_135_action_order_invariance():
@@ -92,10 +91,10 @@ def test_136_cost_scaling():
     assert zs["cost_lb"]==7*z["cost_lb"]
 
 
-def test_137_large_10000_cheapest_q():
+def test_137_large_10000_cheapest_is_bit0():
     ws,d,acts=balanced_family(5000)
     x=cheapest_unresolved_experiment(ws,d,acts)
-    assert x=={"name":"q","cost":1.0,"worst_incompatible_pairs":24995000}
+    assert x=={"name":"bit0","cost":1.0,"worst_incompatible_pairs":6250000}
 
 
 def test_138_large_10000_mass_and_q_capacity():
