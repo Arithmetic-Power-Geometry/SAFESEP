@@ -1,0 +1,9 @@
+worlds,n,variant,cheapest_unresolved,cost,residual_incompatible_pairs,rest_pair_cover_obstructed
+200,100,A,q,1,9900,false
+200,100,B,q,1,9900,true
+1000,500,A,q,1,249500,false
+1000,500,B,q,1,249500,true
+5000,2500,A,q,1,6247500,false
+5000,2500,B,q,1,6247500,true
+10000,5000,A,q,1,24995000,false
+10000,5000,B,q,1,24995000,true
