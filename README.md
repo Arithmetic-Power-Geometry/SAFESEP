@@ -10,64 +10,49 @@ SAFESEP is a formal and reproducible research framework for deciding whether an 
 Given compatible worlds `C` requiring potentially different authorization decisions, can adaptive evidence reach a decision-homogeneous branch while every evidence probe is authorized without improperly presupposing the unresolved decision?
 
 ## Cheapest-experiment diagnostic
-We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** Earlier matched witness families select `q`, cost 1, leaving 9,900 incompatible pairs at 200 worlds and 24,995,000 at 10,000 worlds. Tests 123–138 deliberately add stronger bit probes and CI exposed that `q` must not be assumed globally: in this family the actual selected cheapest unresolved experiment is `bit0`, cost 1, leaving 2,500 incompatible pairs at 200 worlds and 6,250,000 at 10,000 worlds. The repository now recomputes this diagnostic per experiment family.
+We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** The answer is recomputed per experiment family. Earlier matched and dynamic OPEN/BLOCKED families select `q`, cost 1, leaving 9,900 incompatible pairs at 200 worlds and 24,995,000 at 10,000 worlds. Tests 123–138 deliberately add stronger bit probes; there `bit0`, also cost 1, leaves only 2,500 at 200 and 6,250,000 at 10,000. We never inherit a cheapest-probe answer from another family.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, conformant/contingent/epistemic planning, possible-world/belief-state authorization semantics, universal belief-state action applicability, world-dependent applicability, history/provenance authorization, proof-carrying authorization, iterative proof-component fetching, trust negotiation, cost-sensitive credential/policy disclosure, credential-disclosure sequences, runtime access-policy discovery, cyclic credentials, recursive authorization/fixed-point closure, joint information-authority state representation, minimal credential disclosure, pair separation, decision-region edge cutting, dynamic authorization-state updates, latent policy identity, generic context-dependent rule validity, grounded-vs-unsupported circular proofs, ordinary protected proof-component acquisition, planning abstraction loss, generic k-wise indistinguishability, generic local-vs-global consistency gaps, generic set-cover/minimal-cover reductions, generic planning cuts/dead-end reasoning, or generic pair-counting/cover lower bounds.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, conformant/contingent/epistemic planning, possible-world/belief-state authorization semantics, universal belief-state action applicability, world-dependent applicability, history/provenance authorization, proof-carrying authorization, iterative proof-component fetching, trust negotiation, cost-sensitive credential/policy disclosure, credential-disclosure sequences, runtime access-policy discovery, cyclic credentials, recursive authorization/fixed-point closure, joint information-authority state representation, minimal credential disclosure, pair separation, decision-region edge cutting, dynamic authorization-state updates, latent policy identity, generic context-dependent rule validity, grounded-vs-unsupported circular proofs, ordinary protected proof-component acquisition, planning abstraction loss, generic k-wise indistinguishability, generic local-vs-global consistency gaps, generic set-cover/minimal-cover reductions, generic planning cuts/dead-end reasoning, generic pair-counting/cover lower bounds, or generic AND/OR belief-state recursion.
 
 ## Structural results retained
 Matched information/authority marginals do not determine joint resolvability, but full joint-state planning can encode the missing alignment. The authorization-safe evidence premium quantifies extra legitimate cost. Static pair cuts reduce to test-cover/DRD structure after filtering unavailable tests.
 
-## Dynamic branch-relative authorization cut — corrected twice
-Let joint state be `S=(C,A)` and let `K` be a candidate mandatory probe set. A sufficient certificate is: (1) after removing K, no complete resolving policy exists; and (2) in every decision-critical joint state reachable without K, every probe in K is unauthorized. Then no legitimate resolving policy exists. Tests 85–86 repaired token-only transition soundness: authority progress does not require information gain.
+## Dynamic branch-relative authorization cut
+Let joint state be `S=(C,A)`. Tests 85–86 repaired token-only transition soundness: authority progress does not require information gain. Tests 107–122 then stress the dynamic cut through 10,000 worlds.
 
-## Branchwise universal-admissibility, CLE, premium, and matched coupling
-Tests 87–102 isolate common legitimacy, quantify finite/infinite CLE and an unbounded authorization-legitimacy premium, then remove trivial cost padding with matched-cost A/B systems. These are strong structural witnesses but full joint-state planning/trust negotiation can encode their complete incidence relations.
+## Pair-flow and legitimacy obstruction
+Tests 123–138 define incompatible-pair mass and expose the limitation of a root-only capacity ceiling. Tests 139–146 convert branchwise resolver legitimacy into an exact absence-set/set-cover obstruction identity. Both are retained as machinery, not breakthrough claims.
 
-## Legitimate incompatible-pair cover certificate
-Tests 103–106 define a semantic incompatible-pair cover certificate. Static pair cover is useful but collides with established set/minimal-cover methods, so it is retained as a baseline rather than promoted to breakthrough.
-
-## Dynamic legitimate-pair-flow attack
-Tests 107–122 make the certificate dynamic over joint states `(C,A)`, including information-free authority transitions. The dynamic cut is a SAFESEP-specific semantic certificate, not yet a claim that dynamic cuts or joint-state planning are new. See `results/DYNAMIC_PAIR_FLOW_ATTACK.md`.
-
-## Authorization pair-flow lower-bound attack
-Tests 123–138 define incompatible-pair mass `M(C)` and worst-branch legitimate pair reduction. They test local counting, filtering, invariances, cost scaling, parameter sweeps and 10,000-world stress. CI also produced a scientifically important correction: bit probes beat q at equal cost in this family. A root-only capacity ceiling is not a general dynamic SAFESEP theorem because authority-changing transitions may unlock later high-capacity actions. See `results/PAIR_FLOW_LOWER_BOUND.md`.
-
-## Legitimacy obstruction certificate
-Tests 139–146 convert branchwise resolver legitimacy into an exact obstruction witness. With candidate resolvers E, define A_w as the resolvers blocked in world w. No common legitimate resolver exists exactly when the union of A_w covers E; the minimum witness-world certificate is therefore the minimum set-cover size. The controlled 10,000-world stress has 5,000 resolvers, each sampled world permits 4,999, yet the branch has no common resolver and an explicit 5,000-world blocker certificate. This exact identity is retained as SAFESEP machinery, not claimed as new Set Cover theory. See `results/LEGITIMACY_OBSTRUCTION_CERTIFICATE.md`.
+## Recursive authorization-obstruction attack
+Tests 147–162 add an exact finite recursion over joint states `(C,A)`. A transition counts as progress if it changes the compatible-world branch or acquired authority. Thus one-outcome token acquisition is retained while a true no-op is discarded. OPEN resolves because `fetch` grants `alpha` and unlocks `k`; BLOCKED remains obstructed because its matched-cost fetch is a true no-op. The recursion is a sound SAFESEP baseline but its generic AND/OR structure collides with established contingent planning, so it is not promoted as breakthrough. See `results/RECURSIVE_OBSTRUCTION_ATTACK.md`.
 
 ## Datasets and empirical boundary
-Controlled theorem datasets scale through 10,000 worlds, including `legitimacy_obstruction_scaling.csv`. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks audited so far do not natively provide counterfactual world×experiment legitimacy and authority-transition semantics; we do not fabricate such labels.
+Controlled theorem datasets scale through 10,000 worlds, including `legitimacy_obstruction_scaling.csv` and `recursive_obstruction.csv`. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks audited so far do not natively provide counterfactual world×experiment legitimacy and authority-transition semantics; we do not fabricate such labels.
 
 ## Test registry
 1–122. Prior SAFESEP regression, collision, closure, coupling, dynamic-flow and large-scale tests retained.
-123. **Zero pair-mass boundary** — homogeneous branch has zero lower bound.
-124. **Exact binary pair mass** — 200 worlds give 10,000 incompatible root pairs.
-125. **CI-corrected cheapest unresolved diagnostic** — `bit0`, cost 1, leaves 2,500 incompatible pairs at 200 worlds; earlier hard-coded q assertion was falsified and corrected.
-126. **Exact q pair reduction** — q removes exactly 100 pairs in its worst branch at n=100.
-127. **Illegitimate-probe capacity** — non-universal probe contributes zero safe pair-flow capacity.
-128. **True no-op capacity** — information-free no-op contributes zero pair reduction.
-129. **Perfect resolver capacity** — universally legitimate perfect resolver removes all incompatible pairs.
-130. **Perfect-resolver lower bound** — one step, exact action cost.
-131. **No-progress obstruction** — no legitimate progress implies infinite local bound.
-132. **Partition monotonicity sweep** — pair mass never increases under observation partition, n=2..64.
-133. **q formula sweep** — n=2..128 verifies q reduction n and residual n(n-1).
-134. **World-order invariance** — certificate independent of representation ordering.
-135. **Action-order invariance** — lower bound independent of action enumeration.
-136. **Uniform cost scaling** — step bound invariant; cost bound scales exactly.
-137. **10,000-world CI-corrected cheapest unresolved stress** — `bit0`, cost 1, leaves 6,250,000 incompatible pairs.
-138. **10,000-world q invariant** — root mass 25,000,000; q reduction 5,000 and residual 24,995,000.
-139. **Common-resolver positive boundary** — common legitimacy yields no obstruction certificate.
-140. **Single-world obstruction** — one world can block every candidate resolver.
-141. **Exact cover identity** — minimum blocker worlds equal the exact absence-set cover size.
-142. **Local permissiveness/global obstruction** — every world permits n-1 resolvers while the full branch permits none commonly.
-143. **Obstruction-number sweep** — exact certificate size n for n=2..12 matched family.
-144. **Scalable greedy certificate** — 128-resolver witness is generated and independently verified.
-145. **Renaming/order invariance** — obstruction number is representation independent.
-146. **10,000-world structural obstruction** — 5,000 resolvers, 4,999 locally legitimate per sampled world, no common resolver, verified 5,000-world certificate.
+123–138. Pair-flow lower-bound battery retained, including the CI-corrected `bit0` cheapest-probe result.
+139–146. Legitimacy-obstruction/set-cover certificate battery retained.
+147. **Homogeneous terminal boundary** — decision-homogeneous state resolves with no action.
+148. **Critical no-action obstruction** — incompatible decisions with no progress action are obstructed.
+149. **OPEN token-flow resolution** — information-free authority acquisition unlocks the resolver.
+150. **BLOCKED token-flow obstruction** — matched true no-op cannot unlock the resolver.
+151. **Token-only progress preservation** — one-outcome `fetch` changing authority is retained by recursion.
+152. **True no-op elimination** — one-outcome action changing neither belief nor authority is discarded.
+153. **Dynamic-family cheapest unresolved diagnostic** — `q`, cost 1, leaves 9,900 incompatible pairs at 200 worlds.
+154. **OPEN parameter sweep** — exact recursion resolves n=2..32.
+155. **BLOCKED parameter sweep** — exact recursion certifies obstruction n=2..32.
+156. **Unprotected perfect resolver** — direct perfect decision separator resolves.
+157. **Unavailable perfect resolver** — missing authority with no acquisition path obstructs.
+158. **Action-order invariance** — recursive result independent of action enumeration.
+159. **World-order invariance** — recursive result independent of representation order.
+160. **Initial-token restoration** — supplying `alpha` restores resolution in otherwise BLOCKED family.
+161. **10,000-world cheapest unresolved stress** — `q`, cost 1, leaves 24,995,000 incompatible pairs.
+162. **10,000-world authority-transition stress** — OPEN fetch changes authority without information; BLOCKED fetch remains a true no-op.
 
 ## Current novelty status
-**Do not write the paper yet.** Tests 139–146 give an exact and compactly stated authorization-incidence obstruction identity, but its computational core is Set Cover and its universal-applicability semantics still collide with trust negotiation and belief-state planning. The next stop-and-write candidate is a recursive certificate coupling (i) decision-incompatible pair separation and (ii) legitimacy obstruction over reachable joint states, with soundness checked against exact joint-state search when token-only transitions unlock later probes.
+**Do not write the paper yet.** Tests 147–162 close the recursion/soundness gap under token-only authority transitions, but exact recursive AND/OR search is established contingent-planning machinery. The next stop-and-write target must exploit authorization-specific structure to obtain a compact certificate, lower bound, or tractable policy-class theorem that is not merely a re-encoding of full joint-state search or trust negotiation.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
