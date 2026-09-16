@@ -12,7 +12,7 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 ## Cheapest-experiment diagnostic
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective.
 
-Across the current proof-qualified, evidence-authority and matched-marginal constructions, the cheapest unresolved probe is `q`, cost 1. In the new matched-marginal family it is identical in both systems and leaves exactly one incompatible residual branch with `n(n-1)` incompatible pairs.
+Across the current proof-qualified, evidence-authority, matched-marginal and full joint-state planning constructions, the cheapest unresolved probe is `q`, cost 1. In the matched family it is identical in both systems and leaves exactly one incompatible residual branch with `n(n-1)` incompatible pairs: 9,900 at 200 worlds and 24,995,000 at 10,000 worlds.
 
 ## Prior-art collisions established
 SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent planning, epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, non-circular authorization proofs, well-founded authorization semantics, recursive authorization, least-fixed-point credential closure, dynamic evidence gathering, or representing information and authority variables jointly in a planner.
@@ -24,7 +24,10 @@ For every `n>=2`, `A_n` and `B_n` match the tested separate information and auth
 
 `B_n`: residual outcome -> `beta` -> `resolve_special`.
 
-Therefore the tested marginals satisfy `M_info(A_n)=M_info(B_n)` and `M_auth(A_n)=M_auth(B_n)`, while residual resolvability differs. This is a structural separation of the listed summaries, not a claim that existing combined-state planners cannot encode the full joint relation.
+Therefore the tested marginals satisfy `M_info(A_n)=M_info(B_n)` and `M_auth(A_n)=M_auth(B_n)`, while residual resolvability differs. This is a valid structural separation of the listed summaries.
+
+## Full joint-state planning attack
+`src/safesep/joint_planning_baseline.py` independently exposes `(compatible worlds, acquired authority tokens)` as the planner state. It exactly reproduces the A/B separation. Hence the matched-marginal theorem does **not** establish irreducibility to contingent planning: the full branch-sensitive joint signature distinguishes the systems and ordinary contingent planning can encode the authority tokens as state propositions/effects.
 
 ## Datasets and empirical boundary
 - `data/cheapest_experiment_cases.csv` — cheapest-probe cases.
@@ -34,6 +37,7 @@ Therefore the tested marginals satisfy `M_info(A_n)=M_info(B_n)` and `M_auth(A_n
 - `data/dynamic_proof_coupling.csv` — branch-evolving proof-eligibility construction.
 - `data/evidence_authority_closure.csv` — recursive authority closure benchmark.
 - `data/joint_coupling_matched_marginals.csv` — matched separate marginals at 200 and 10,000 worlds.
+- `data/joint_planning_collision.csv` — full joint-state planning comparison through 10,000 worlds.
 
 AuthBench remains real external-validity evidence, but it does not natively provide counterfactual authorization-proof/evidence-yield graphs. We do not fabricate those labels. Controlled 10,000-world benchmarks remain theorem stress tests.
 
@@ -70,15 +74,19 @@ AuthBench remains real external-validity evidence, but it does not natively prov
 30. Cheapest experiment under recursive authority closure — `q`, cost 1.
 31. Unseeded evidence-authority cycle cannot self-authorize.
 32. 10,000-world evidence-authority closure stress test.
-33. **Matched-marginal cheapest experiment** — both systems return `q`, cost 1, one unresolved branch; at 200 worlds the branch contains 9,900 incompatible pairs.
-34. **Separate-marginal equality** — implemented information and authority summaries are exactly equal in the matched pair.
-35. **Joint-alignment separation** — changing only outcome-to-authority alignment changes residual resolvability.
-36. **10,000-world matched-marginal stress test** — same cheapest experiment and separate marginals, but different residual resolvability; 24,995,000 incompatible pairs.
+33. Matched-marginal cheapest experiment — both systems return `q`, cost 1, one unresolved branch; 9,900 incompatible pairs at 200 worlds.
+34. Separate-marginal equality.
+35. Joint-alignment separation.
+36. 10,000-world matched-marginal stress test — 24,995,000 incompatible pairs.
+37. **Full-planner cheapest-experiment preservation** — `q`, cost 1, still leaves incompatibility.
+38. **Combined-state planning collision** — ordinary joint-state contingent planning exactly reproduces A resolvable/B blocked.
+39. **Marginals-vs-joint-state test** — separate summaries match but full branch-sensitive state signatures differ.
+40. **10,000-world full-planner stress test** — `q` cost 1, 24,995,000 residual incompatible pairs; combined-state planner reproduces the separation.
 
 ## Current novelty status
-**Do not write the paper yet.** The matched-marginal result is stronger than the previous coarse-summary constructions, but a generic contingent planner can encode the combined state `(knowledge, authority)` and therefore can represent the full coupling. Representation alone is not breakthrough novelty.
+**Do not write the paper yet.** The full joint-state attack is a clean negative novelty result: the matched-marginal separation survives as a summary-insufficiency theorem, but disappears as a representational novelty claim once authority is included in the contingent-planning state.
 
-The next decisive attack is to compile this family into an explicit combined-state contingent-planning baseline. If the separation disappears once the joint relation is supplied, we retain the result only as a marginal-insufficiency theorem and seek a coupling-specific complexity/invariant result. If a stronger restriction survives that reduction, that becomes the stop-and-write candidate.
+The next stop-and-write candidate must survive full-state compilation. The strongest directions are now a restricted complexity theorem, an authorization-specific invariant/lower bound on legitimate evidence acquisition, or an empirical phenomenon with genuine authorization semantics. We will not claim a new planning primitive.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and narrow claims after every collision.
