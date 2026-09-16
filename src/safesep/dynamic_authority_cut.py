@@ -7,6 +7,7 @@ A certificate is evaluated on joint states (compatible worlds, authority tokens)
 It is intentionally a sufficient impossibility certificate, not a new planner.
 """
 from dataclasses import dataclass
+from functools import lru_cache
 from typing import FrozenSet, Mapping, Sequence, Tuple
 
 World = str
@@ -74,7 +75,6 @@ def cheapest_unresolved(P: Problem, C=None, tokens=None):
 
 
 def reachable_without(P: Problem, forbidden: FrozenSet[str]):
-    """Enumerate joint states reachable without using forbidden probes."""
     root=(frozenset(P.worlds),P.initial_tokens)
     seen={root}; stack=[root]
     while stack:
@@ -92,23 +92,48 @@ def reachable_without(P: Problem, forbidden: FrozenSet[str]):
     return seen
 
 
+def resolvable_without(P: Problem, forbidden: FrozenSet[str]) -> bool:
+    """Exact restricted AND/OR check: can all branches resolve without forbidden probes?"""
+    visiting=set()
+    @lru_cache(maxsize=None)
+    def win(C, tokens):
+        C=frozenset(C); tokens=frozenset(tokens)
+        if not incompatible_pairs(P,C):
+            return True
+        key=(C,tokens)
+        if key in visiting:
+            return False
+        visiting.add(key)
+        try:
+            for e in P.probes:
+                if e.name in forbidden or not executable(e,tokens):
+                    continue
+                bs=branches(e,C)
+                if len(bs)<2:
+                    continue
+                children=[(B,next_tokens(e,o,tokens)) for o,B in bs]
+                if all(win(B,T) for B,T in children):
+                    return True
+            return False
+        finally:
+            visiting.discard(key)
+    return win(frozenset(P.worlds),P.initial_tokens)
+
+
 def dynamic_cut_certificate(P: Problem, cut: FrozenSet[str]):
     """Sufficient obstruction certificate.
 
     Conditions:
-    1) every decision-incompatible pair is separable only by probes in `cut`;
+    1) removing `cut` destroys every complete resolving policy;
     2) no cut probe is executable in any decision-critical state reachable without cut.
 
-    If both hold, autonomous resolution is impossible: any resolving policy must first
-    use a cut probe, but no cut probe can be the first such probe.
+    Then any successful policy would require a first cut use, but no such first use is
+    authorized. This is deliberately compared against ordinary planning dead-end/cut ideas.
     """
     root=frozenset(P.worlds)
-    I=incompatible_pairs(P,root)
-    noncut=[e for e in P.probes if e.name not in cut]
-    mandatory=all(not any(separates(e,p) for e in noncut) for p in I)
+    mandatory=not resolvable_without(P,cut)
     states=reachable_without(P,cut)
-    blocked=True
-    critical_states=0
+    blocked=True; critical_states=0
     for C,tokens in states:
         if not incompatible_pairs(P,C):
             continue
@@ -119,15 +144,10 @@ def dynamic_cut_certificate(P: Problem, cut: FrozenSet[str]):
             "mandatory_cut": mandatory,
             "blocked_before_cut": blocked,
             "reachable_critical_states_without_cut": critical_states,
-            "root_incompatible_pairs": len(I)}
+            "root_incompatible_pairs": len(incompatible_pairs(P,root))}
 
 
 def witness(n=100, blocked=True):
-    """2n worlds. q is cheapest and leaves an incompatible residual branch.
-
-    q grants alpha on the residual branch only in the open system. Resolver r
-    requires alpha and is the only probe that separates every R/W pair.
-    """
     rs=tuple(f"r{i}" for i in range(n)); ws=tuple(f"w{i}" for i in range(n))
     W=rs+ws; D={w:("R" if w.startswith("r") else "W") for w in W}
     qout={w:("special" if w=="r0" else "rest") for w in W}
