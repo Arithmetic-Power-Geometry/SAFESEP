@@ -1,0 +1,11 @@
+n,total_worlds,system,cheapest_experiment,cost,worst_residual_incompatible_pairs,each_world_has_resolver,branchwise_uniform_resolver,resolvable_after_q_rest
+100,200,A,q,1,9900,true,true,true
+100,200,B,q,1,9900,true,false,false
+500,1000,A,q,1,249500,true,true,true
+500,1000,B,q,1,249500,true,false,false
+1000,2000,A,q,1,999000,true,true,true
+1000,2000,B,q,1,999000,true,false,false
+2500,5000,A,q,1,6247500,true,true,true
+2500,5000,B,q,1,6247500,true,false,false
+5000,10000,A,q,1,24995000,true,true,true
+5000,10000,B,q,1,24995000,true,false,false
