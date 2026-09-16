@@ -1,0 +1,5 @@
+worlds,n,case,cheapest_unresolved_probe,probe_cost,worst_incompatible_pairs,unconstrained_resolution_cost,authorization_safe_resolution_cost,authority_premium
+200,100,safe,q,1,9900,1,2,1
+200,100,blocked,q,1,9900,1,inf,inf
+10000,5000,safe,q,1,24995000,1,2,1
+10000,5000,blocked,q,1,24995000,1,inf,inf
