@@ -1,0 +1,5 @@
+system,worlds,cheapest_unresolved_probe,cost,q_yields_alpha,r_requires_alpha,s_requires_beta,r_yields_beta,s_yields_alpha,resolver_in_least_closure,interpretation
+A,200,q,1,yes,yes,yes,yes,yes,yes,externally grounded chain q->alpha->r
+B,200,q,1,no,yes,yes,yes,yes,no,unseeded mutual authority cycle r<->s cannot bootstrap
+A,10000,q,1,yes,yes,yes,yes,yes,yes,large controlled structural stress test
+B,10000,q,1,no,yes,yes,yes,yes,no,large controlled structural stress test
