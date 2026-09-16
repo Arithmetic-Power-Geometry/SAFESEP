@@ -1,0 +1,6 @@
+n_per_decision,total_worlds,cheapest_experiment,cheapest_cost,worst_residual_incompatible_pairs,A_CLE_after_rest,B_CLE_after_rest,data_type
+100,200,q,1,9900,2,infinity,controlled_theorem_stress
+500,1000,q,1,249500,2,infinity,controlled_theorem_stress
+1000,2000,q,1,999000,2,infinity,controlled_theorem_stress
+2500,5000,q,1,6247500,2,infinity,controlled_theorem_stress
+5000,10000,q,1,24995000,2,infinity,controlled_theorem_stress
