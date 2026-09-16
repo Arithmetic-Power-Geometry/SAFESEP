@@ -42,11 +42,13 @@ This is a research theorem candidate under continuing prior-art and mathematical
 
 ## Cheapest-experiment diagnostic
 
-The repository tests:
+The repository tests the exact diagnostic question:
 
 > **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?**
 
-This is not the SafeSep objective. It detects cheap probes that appear informative but remain insufficient for authorization resolution. `cheapest_experiment_leaving_incompatibility(...)` records cost, current admissibility, incompatible branches, and worst remaining incompatible-pair count. `cheapest_one_step_resolver(...)` finds a cheapest single complete resolver.
+This is deliberately not the SafeSep objective. It detects cheap probes that appear informative but remain insufficient for authorization resolution. `cheapest_experiment_leaving_incompatibility(...)` records cost, current admissibility, incompatible branches, and worst remaining incompatible-pair count. `cheapest_one_step_resolver(...)` finds a cheapest single complete resolver.
+
+The new matched-family test shows something stronger: for every tested matched pair `A_n,B_n`, the answer to the cheapest-experiment question is identical at the root — the same safe probe `e1`, the same cost `1`, one remaining incompatible branch, and the same number `n(n-1)` of worst-case incompatible pairs — yet `SafeSep(A_n)=2` while `SafeSep(B_n)=∞`. Thus even this richer cheapest-probe summary does not determine adaptive safe authorization resolvability.
 
 ## Current reproducible results
 
@@ -60,9 +62,9 @@ This is not the SafeSep objective. It detects cheap probes that appear informati
 
 ### Parameterized matched-summary separation
 
-For every constructed `n >= 2`, systems `A_n` and `B_n` contain `2n` worlds and have identical decisions, experiment costs, experiment outcome maps, per-experiment admissibility counts, ARC-like cost, and CARC-like one-step cost. They differ only in **which worlds** admit the second experiment.
+For every `n>=2`, define `A_n` and `B_n` on `2n` worlds: `n` READ worlds `r0,...,r(n-1)` and `n` WRITE worlds `w0,...,w(n-1)`. Probe `e1` is universally admissible, isolates `r0`, and otherwise returns one residual outcome. Probe `e2` reveals only the required authorization decision (`R` versus `W`). Both systems have the same worlds, decisions, costs, outcome maps, and per-experiment admissibility counts.
 
-The construction yields
+In `A_n`, `e2` is admissible exactly on the residual branch after `e1`. Hence the safe tree `e1 -> e2` exists and has worst-case cost 2. In `B_n`, one residual READ world (`r1`) is removed from `e2`'s admissibility set and the already-eliminated `r0` is inserted instead. The admissibility count is unchanged, but `e2` is now forbidden on the only decision-critical residual branch. No other experiment can resolve that branch. Therefore:
 
 `ARC(A_n)=ARC(B_n)=1`,
 
@@ -72,7 +74,7 @@ but
 
 `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
 
-Thus the tested coarse scalar summaries do not determine safe authorization resolvability. The world-by-experiment admissibility incidence structure matters. This is a stronger structural result than a single four-world counterexample, but it must still be compared carefully with active diagnosis, constrained epistemic planning, safe sensing, and related conditional-planning literature before making a worldwide novelty claim.
+This is an analytic construction for all `n>=2`; the software tests finite ranges as executable proof obligations and regression checks. It establishes irreducibility only relative to the explicitly matched summaries, not against every conceivable statistic.
 
 ## Datasets
 
@@ -94,6 +96,8 @@ Significant tests are preserved in GitHub rather than treated as disposable chec
 7. **Deadlock has no admissible one-step resolver** — a protected distinguishing probe cannot be treated as a legitimate current action.
 8. **Parameterized SafeSep irreducibility family** — for `n=2..20`, verifies matched coarse signatures and identical ARC/CARC values while `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
 9. **Scale invariance of the separation** — verifies the same finite/infinite SafeSep separation at 4, 6, 10, 20, 40, and 100 worlds.
+10. **Parameterized construction invariants** — for `n=2..50`, checks the analytic proof obligations: identical observable structure and aggregate authority statistics, a decision-critical residual branch, and the exact admissibility-incidence change responsible for the separation.
+11. **Cheapest-probe irreducibility** — verifies matched `A_n,B_n` have the same cheapest currently safe informative probe, cost, incompatible-branch count, and worst incompatible-pair count, yet finite versus infinite SafeSep.
 
 Current test files:
 
@@ -104,7 +108,7 @@ Current test files:
 
 ## Reproducible software
 
-The package contains an exact finite-world SafeSep solver, unconstrained ARC-like baseline, one-step CARC-like baseline, constructive counterexamples, parameterized irreducibility families, cheapest-experiment diagnostics, benchmark datasets, unit tests, and CI.
+The package contains an exact finite-world SafeSep solver, unconstrained ARC-like baseline, one-step CARC-like baseline, constructive counterexamples, parameterized irreducibility families, cheapest-experiment diagnostics, benchmark datasets, executable theorem invariants, unit tests, benchmark scripts, and CI across Python 3.10–3.12.
 
 ## Quick start
 
@@ -122,11 +126,17 @@ For each new result: state the mathematical claim precisely; construct the small
 
 SAFESEP does **not** claim novelty for least privilege, JIT authorization, task-scoped permissions, dynamic capability scoping, missing-attribute retrieval, generic active sensing, POMDP information gathering, value of information, trust negotiation, ordinary decision-tree optimization, active diagnosis, or conditional epistemic planning.
 
-The current novelty candidate is narrower: **decision-relative safe separability for authorization**, where an adaptive evidence strategy must reach a decision-homogeneous knowledge state while every probe is itself justified on every world remaining on its branch.
+Active diagnosis already uses conditional plans to move ambiguous system states toward diagnosable states, including safety considerations. Epistemic diagnostic planning already supports sensing actions, epistemic goals, and safety constraints. These are close mathematical ancestors and must be treated explicitly in a paper.
+
+The current novelty candidate is narrower: **decision-relative safe separability for authorization**, where the target is not necessarily identification of the true world but decision homogeneity, and every evidence probe must itself be authorization-admissible in every world remaining on its branch. The matched-family results show that aggregate permission/information summaries — including the tested cheapest-probe summaries — can coincide while this property differs.
+
+## Paper status
+
+The project now has enough formal structure, counterexamples, an infinite parameterized construction, executable tests, datasets, and reproducible software to begin a manuscript. The manuscript should describe SAFESEP as a **novelty candidate / proposed framework** until a deeper scholarly and patent prior-art review is complete. The strongest current theoretical result is the parameterized matched-summary separation, not the mere existence of a cheapest experiment.
 
 ## Next research targets
 
-Immediate targets are: formal proof of the parameterized separation for all `n>=2`; comparison against active-diagnosis/epistemic-planning formalisms; complexity of the SAFESEP decision problem; randomized/generated authorization datasets; information-gain and risk baselines; and Microsoft-style read/write/send/delete/escalate authorization benchmarks.
+Immediate targets are: a formal reduction/comparison against active-diagnosis and epistemic-planning formalisms; complexity of the SAFESEP decision problem; randomized/generated authorization datasets; information-gain and risk baselines; and Microsoft-style read/write/send/delete/escalate authorization benchmarks.
 
 ## License
 
