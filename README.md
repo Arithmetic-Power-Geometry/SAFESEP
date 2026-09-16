@@ -12,31 +12,29 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 ## Cheapest-experiment diagnostic
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective.
 
-In the original matched family, both systems have the same cheapest safe informative root probe `e1`, cost 1, one incompatible branch and `n(n-1)` worst-case incompatible pairs, yet `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
-
-Under the proof-qualified branch-evolution construction, both matched systems again have the same cheapest eligible unresolved probe `q`, cost 1. It is informative but deliberately leaves a decision-critical residual branch.
+The original matched family has the same cheapest root probe `e1`, cost 1. Under decision-neutral and proof-qualified constructions the cheapest unresolved probe is `q`, cost 1. The evidence-authority closure construction preserves this invariant: `q` is independently executable in both systems and remains the cheapest probe that leaves an incompatible branch.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent planning, epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, non-circular authorization proofs, well-founded authorization semantics, stateful authorization, or branch-dependent proof eligibility by itself.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent planning, epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, non-circular authorization proofs, well-founded authorization semantics, recursive authorization, or least-fixed-point credential closure.
 
-The local Decision-Neutral Authority Closure check can be compiled into ordinary authorization-proof dependency analysis when proof premises are explicit. `src/safesep/proof_neutral.py` implements this collision. The new `src/safesep/dynamic_proof.py` additionally tests branch-relative proof eligibility. See `docs/PROOF_NEUTRALITY_COLLISION.md` and `docs/BRANCH_EVOLUTION_COLLISION.md`.
+The proof-neutrality and branch-evolution attacks showed that local no-presupposition checks and dynamic proof eligibility can be encoded in established authorization/planning machinery. The latest evidence-authority closure attack shows that recursive evidence/authority cycles alone are also insufficient: trust-management systems already use recursive logical closure and handle cyclic dependencies.
 
-## DRAC branch-evolution result
-For matched systems A_n and B_n, `q` has the same cost and outcomes and is the same cheapest eligible unresolved root probe. The resolver has the same cost, outcomes, proof count, and is initially ineligible in both systems. After q contracts the belief from 2n to 2n-1 worlds, the resolver becomes proof-eligible in A_n but remains ineligible in B_n. Hence A_n is adaptively resolvable while B_n is not. The construction is stress-tested through 10,000 explicit worlds.
+## Surviving target: joint information-authority closure
+The remaining candidate couples two evolving objects:
+1. the decision-relevant information state induced by experiment outcomes; and
+2. the least grounded authorization closure determining which future evidence experiments may legitimately execute.
 
-This is a useful coupling result but **not yet the breakthrough stop point**. Stateful Authorization Logic already permits policies to depend on system state, proof-carrying authorization supports iterative proof acquisition/challenges, and a general contingent planner can enlarge its state to include proof/policy state. Therefore dynamic proof eligibility alone is not claimed as a new planning primitive.
-
-## Surviving frontier
-The remaining target is stricter: characterize cases where the *justification for evidence acquisition itself* depends on evidence whose legitimate acquisition is governed by the unresolved authorization relation, and derive an invariant/impossibility/complexity result that is not erased by simply compiling proof state into an enlarged planning state.
+An experiment may therefore change both what the agent knows and what the agent is authorized to learn next. The research target is minimum-cost adaptive resolution under this joint evolution. Novelty must come from a coupling-specific theorem/separation/complexity result, not from fixed points, recursive credentials, proof search, or contingent sensing individually.
 
 ## Datasets and empirical boundary
 - `data/cheapest_experiment_cases.csv` — cheapest-probe cases.
 - `data/parameterized_irreducibility.csv` — matched family through 100 worlds.
 - `data/large_authorization_benchmark.csv` — controlled theorem benchmark from 200 through 10,000 explicit worlds.
-- `data/dynamic_proof_coupling.csv` — branch-evolving proof-eligibility separation through 10,000 worlds.
 - `data/real_authorization_source_audit.csv` — real-vs-controlled coverage audit.
+- `data/dynamic_proof_coupling.csv` — branch-evolving proof-eligibility construction.
+- `data/evidence_authority_closure.csv` — grounded-vs-unseeded recursive authority closure at 200 and 10,000 worlds.
 
-AuthBench is verified from its public repository: 120 tasks, 80 standard + 40 sensitive, 10 categories, gold read/write/execute permissions, and constrained execution. It does not provide counterfactual proof-dependency/decision-dependency labels, so those fields are not fabricated. Controlled 10,000-world constructions remain theorem stress tests.
+AuthBench remains real external-validity evidence, but it does not natively provide counterfactual authorization-proof/evidence-yield graphs. We do not fabricate those labels. The 10,000-world controlled benchmarks remain theorem stress tests.
 
 ## Test registry
 1. Minimal authorization deadlock.
@@ -62,17 +60,20 @@ AuthBench is verified from its public repository: 120 tasks, 80 standard + 40 se
 21. Cheapest decision-neutral probe leaves incompatible worlds — `q`, cost 1, on 200 worlds.
 22. Decision-neutral authority-closure separation.
 23. 10,000-world decision-neutral scale test.
-24. All resolver proofs decision-tainted — proof-dependency compilation reproduces the DNAC obstruction.
-25. Independent alternative-proof restoration — one decision-independent proof restores eligible resolution.
+24. All resolver proofs decision-tainted — proof-dependency compilation reproduces obstruction.
+25. Independent alternative-proof restoration.
 26. 10,000-world proof-neutrality compilation.
-27. **Matched cheapest branch-evolving probe** — both systems select `q`, cost 1, while q leaves incompatible worlds.
-28. **Branch-evolution resolvability separation** — identical root eligibility and information structure, but resolver eligibility diverges after the same belief contraction, yielding finite vs impossible adaptive resolution.
-29. **10,000-world branch-evolution stress test** — preserves the divergence at 5,000 READ + 5,000 WRITE worlds.
+27. Branch-evolving matched cheapest-probe test.
+28. Branch-evolving proof-eligibility resolvability separation.
+29. 10,000-world branch-evolution stress test.
+30. **Cheapest experiment under recursive authority closure** — `q`, cost 1, remains the cheapest executable experiment leaving mutually incompatible worlds in both matched systems.
+31. **Unseeded evidence-authority cycle cannot self-authorize** — grounded chain admits resolver `r`; pure `r↔s` authority/evidence cycle does not enter the least closure.
+32. **10,000-world evidence-authority closure stress test** — preserves identical cheapest probe but different resolver closure without incompatible-pair enumeration.
 
 ## Current novelty status
-**Do not stop yet.** Tests 27-29 establish the requested branch-evolution separation, but the prior-art attack shows that state-dependent authorization and iterative proof acquisition are established. The result is preserved because it identifies exactly what still fails to establish novelty.
+**Do not write the paper yet.** The latest fixed-point attack collides with established trust-management/authorization semantics. The strongest remaining target is now a theorem about **joint information-authority closure optimization**: two systems should match ordinary information summaries and ordinary authorization-closure summaries yet differ because the adaptive coupling between observations and grounded authority changes future feasible evidence paths.
 
-The next stop-and-write threshold remains one coupling-specific invariant, impossibility, or complexity theorem that survives reduction to stateful/proof-carrying authorization and contingent/epistemic planning. The strongest next direction is a self-governing evidence-authority closure in which evidence needed to justify a probe is itself obtainable only through probes governed by the unresolved authority relation.
+The stop-and-write threshold remains one coupling-specific result that survives direct comparison with recursive trust management, proof-carrying authorization, stateful authorization logic, contingent/epistemic planning and adaptive diagnosis.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and narrow claims after every collision.
