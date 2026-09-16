@@ -1,0 +1,11 @@
+case,n,total_worlds,cheapest_unresolved,cost,worst_incompatible_pairs,cut_k_blocked,fetch_grants_alpha
+OPEN,100,200,q,1,9900,false,true
+BLOCKED,100,200,q,1,9900,true,false
+OPEN,500,1000,q,1,249500,false,true
+BLOCKED,500,1000,q,1,249500,true,false
+OPEN,1000,2000,q,1,999000,false,true
+BLOCKED,1000,2000,q,1,999000,true,false
+OPEN,2500,5000,q,1,6247500,false,true
+BLOCKED,2500,5000,q,1,6247500,true,false
+OPEN,5000,10000,q,1,24995000,false,true
+BLOCKED,5000,10000,q,1,24995000,true,false
