@@ -13,7 +13,7 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** Across current constructions the diagnostic remains `q`, cost 1. It leaves 9,900 incompatible pairs at 200 worlds and 24,995,000 at the controlled 10,000-world scale.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, conformant/contingent/epistemic planning, possible-world/belief-state authorization semantics, universal belief-state action applicability, world-dependent applicability, history/provenance authorization, proof-carrying authorization, iterative proof-component fetching, trust negotiation, cost-sensitive credential/policy disclosure, credential-disclosure sequences, runtime access-policy discovery, cyclic credentials, recursive authorization/fixed-point closure, joint information-authority state representation, minimal credential disclosure, pair separation, decision-region edge cutting, dynamic authorization-state updates, latent policy identity, generic context-dependent rule validity, grounded-vs-unsupported circular proofs, ordinary protected proof-component acquisition, planning abstraction loss, generic k-wise indistinguishability, generic local-vs-global consistency gaps, generic set-cover/minimal-cover reductions, or generic planning cuts/dead-end reasoning.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, conformant/contingent/epistemic planning, possible-world/belief-state authorization semantics, universal belief-state action applicability, world-dependent applicability, history/provenance authorization, proof-carrying authorization, iterative proof-component fetching, trust negotiation, cost-sensitive credential/policy disclosure, credential-disclosure sequences, runtime access-policy discovery, cyclic credentials, recursive authorization/fixed-point closure, joint information-authority state representation, minimal credential disclosure, pair separation, decision-region edge cutting, dynamic authorization-state updates, latent policy identity, generic context-dependent rule validity, grounded-vs-unsupported circular proofs, ordinary protected proof-component acquisition, planning abstraction loss, generic k-wise indistinguishability, generic local-vs-global consistency gaps, generic set-cover/minimal-cover reductions, generic planning cuts/dead-end reasoning, or generic pair-counting/cover lower bounds.
 
 ## Structural results retained
 Matched information/authority marginals do not determine joint resolvability, but full joint-state planning can encode the missing alignment. The authorization-safe evidence premium quantifies extra legitimate cost. Static pair cuts reduce to test-cover/DRD structure after filtering unavailable tests.
@@ -30,8 +30,11 @@ Tests 103–106 define a semantic incompatible-pair cover certificate. Static pa
 ## Dynamic legitimate-pair-flow attack
 Tests 107–122 make the certificate dynamic over joint states `(C,A)`. Probe `k` perfectly resolves R/W but requires token `alpha`; OPEN and BLOCKED match worlds, decisions, raw information maps, action names/costs, and initial illegitimacy of `k`. Their one-outcome `fetch` actions are information-identical: OPEN grants `alpha`, BLOCKED is a true no-op. The cut K={k} is blocked exactly when every decision-critical joint state reachable without K keeps k illegitimate. This directly checks token-only authority transitions and scales through 10,000 controlled worlds. It is a SAFESEP-specific semantic certificate, not yet a claim that dynamic cuts or joint-state planning are new. See `results/DYNAMIC_PAIR_FLOW_ATTACK.md`.
 
+## Authorization pair-flow lower-bound attack
+Tests 123–138 define incompatible-pair mass `M(C)` and worst-branch legitimate pair reduction `Delta_e(C)=M(C)-max_o M(C_e,o)`. They test a local counting lower bound, exact pair formulas, illegitimate/no-op filtering, perfect resolution, invariances, cost scaling, parameter sweeps, and 10,000-world stress. A scientifically important limitation is retained: a root-only capacity ceiling is not a general dynamic SAFESEP theorem because authority-changing transitions may unlock later high-capacity actions. The next theorem must therefore use a state-dependent potential or a cut over reachable joint states. See `results/PAIR_FLOW_LOWER_BOUND.md`.
+
 ## Datasets and empirical boundary
-Controlled theorem datasets include the prior SAFESEP stress suites plus `matched_coupling_premium.csv`, `legitimate_pair_cover_bound.csv`, and `dynamic_pair_flow.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks do not natively provide counterfactual world×experiment legitimacy and token-yield semantics; we do not fabricate such labels.
+Controlled theorem datasets include the prior SAFESEP stress suites plus `matched_coupling_premium.csv`, `legitimate_pair_cover_bound.csv`, `dynamic_pair_flow.csv`, and `pair_flow_bound.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. Public authorization benchmarks do not natively provide counterfactual world×experiment legitimacy and authority-transition semantics; we do not fabricate such labels.
 
 ## Test registry
 1–40. Previous SAFESEP regression and collision tests retained unchanged.
@@ -42,25 +45,26 @@ Controlled theorem datasets include the prior SAFESEP stress suites plus `matche
 95–98. Unbounded authorization-legitimacy premium retained.
 99–102. Matched-cost branchwise coupling attack retained.
 103–106. Legitimate incompatible-pair cover certificate retained.
-107. **Dynamic-flow cheapest unresolved OPEN** — q cost 1; 9,900 residual incompatible pairs at 200 worlds.
-108. **Dynamic-flow cheapest unresolved BLOCKED** — same q/cost/pair count.
-109. **Blocked dynamic-cut certificate** — K={k} remains illegitimate in all reachable critical states without K.
-110. **Token-only escape regression** — OPEN fetch grants alpha without information gain, so K is not blocked.
-111. **Cheapest-probe parameter sweep** — n=2..64 preserves q cost 1 and n(n-1) worst residual pairs.
-112. **Dynamic-cut parameter sweep** — n=2..64 separates BLOCKED from OPEN.
-113. **Authority-only reachability** — OPEN reaches token alpha with unchanged compatible-world set.
-114. **True no-op regression** — BLOCKED fetch creates no spurious authority state.
-115. **Raw-information matching** — OPEN/BLOCKED match probe names, costs, outcomes and requirements.
-116. **Action-cost matching** — both have exactly three unit-cost actions.
-117. **Authority-flow isolation** — only fetch token yield differs.
-118. **Initial resolver illegitimacy** — k is initially unavailable in both cases.
-119. **1,000-world stress** — q leaves 249,500 incompatible pairs.
-120. **2,000-world stress** — q leaves 999,000 incompatible pairs.
-121. **5,000-world stress** — q leaves 6,247,500 incompatible pairs.
-122. **10,000-world analytic stress** — q cost 1; 24,995,000 residual incompatible pairs.
+107–122. Dynamic legitimate-pair-flow battery retained.
+123. **Zero pair-mass boundary** — decision-homogeneous branch has zero lower bound.
+124. **Exact binary pair mass** — 200 worlds give 10,000 incompatible root pairs.
+125. **Cheapest unresolved diagnostic** — q cost 1 leaves 9,900 incompatible pairs at 200 worlds.
+126. **Exact q pair reduction** — q removes exactly 100 pairs in its worst branch at n=100.
+127. **Illegitimate-probe capacity** — non-universal probe contributes zero safe pair-flow capacity.
+128. **True no-op capacity** — information-free no-op contributes zero pair reduction.
+129. **Perfect resolver capacity** — universally legitimate perfect resolver removes all incompatible pairs.
+130. **Perfect-resolver lower bound** — one step, exact action cost.
+131. **No-progress obstruction** — no legitimate progress implies infinite local bound.
+132. **Partition monotonicity sweep** — incompatible-pair mass never increases under observation partition, n=2..64.
+133. **q formula sweep** — n=2..128 verifies reduction n and residual n(n-1).
+134. **World-renaming/order invariance** — certificate independent of representation ordering.
+135. **Action-order invariance** — lower bound independent of action enumeration.
+136. **Uniform cost scaling** — step bound invariant; cost bound scales exactly.
+137. **10,000-world cheapest unresolved stress** — q cost 1 leaves 24,995,000 incompatible pairs.
+138. **10,000-world pair-flow invariant** — root mass 25,000,000; q worst-branch reduction 5,000.
 
 ## Current novelty status
-**Do not write the paper yet.** The dynamic certificate survives the static-cover weakness and correctly handles authority-only transitions, but automated trust negotiation already supports incremental protected credential/policy disclosure and cyclic dependencies, while contingent planning can encode joint state transitions. The next stop-and-write candidate is a quantitative **authorization pair-flow lower bound/conservation theorem** under a restricted authorization language: bound the decision-incompatibility that can be eliminated per legitimately acquired authority unit, and prove a family where the bound is tight or asymptotically separates safe authorization from ordinary information/planning cost without artificial cost padding.
+**Do not write the paper yet.** Tests 123–138 strengthen the quantitative machinery but also expose the key limitation: a root-only pair-flow capacity bound can be invalidated when legitimate authority-changing transitions unlock stronger future probes. This is a useful negative result, not a breakthrough claim. The next stop-and-write candidate is a sound state-dependent potential/cut theorem over reachable joint states `(C,A)`, tested against exact joint-state search on exhaustive small systems and randomized adversarial instances. If such a theorem survives prior-art attack and yields a nontrivial authorization-specific bound, we will have a much stronger basis to stop novelty hunting and write.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
