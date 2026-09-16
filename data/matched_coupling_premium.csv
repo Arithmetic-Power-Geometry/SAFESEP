@@ -1,0 +1,6 @@
+worlds,n,cheapest_experiment,cheapest_cost,residual_incompatible_pairs,resolver_count,resolver_cost,unconstrained_optimum,A_common_resolver,B_common_resolver,A_safe_after_q,B_safe_after_q,data_type
+200,100,q,1,9900,100,1,1,true,false,1,infinity,controlled_theorem
+1000,500,q,1,249500,500,1,1,true,false,1,infinity,controlled_theorem
+2000,1000,q,1,999000,1000,1,1,true,false,1,infinity,controlled_theorem
+5000,2500,q,1,6247500,2500,1,1,true,false,1,infinity,controlled_theorem
+10000,5000,q,1,24995000,5000,1,1,true,false,1,infinity,controlled_theorem
