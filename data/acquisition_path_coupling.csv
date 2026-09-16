@@ -1,0 +1,9 @@
+worlds,n,variant,cheapest_probe,cost,worst_residual_incompatible_pairs,ordinary_proof_exists,proof_graph_edges,component_obtainable,residual_resolvable
+200,100,A,q,1,9900,true,1,true,true
+200,100,B,q,1,9900,true,1,false,false
+1000,500,A,q,1,249500,true,1,true,true
+1000,500,B,q,1,249500,true,1,false,false
+5000,2500,A,q,1,6247500,true,1,true,true
+5000,2500,B,q,1,6247500,true,1,false,false
+10000,5000,A,q,1,24995000,true,1,true,true
+10000,5000,B,q,1,24995000,true,1,false,false
