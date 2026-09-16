@@ -1,0 +1,13 @@
+family,n,worlds,system,arc_like,carc_one_step,safesep,cheapest_probe,cheapest_cost,worst_incompatible_pairs
+matched,100,200,A,1,infinity,2,e1,1,9900
+matched,100,200,B,1,infinity,infinity,e1,1,9900
+matched,250,500,A,1,infinity,2,e1,1,62250
+matched,250,500,B,1,infinity,infinity,e1,1,62250
+matched,500,1000,A,1,infinity,2,e1,1,249500
+matched,500,1000,B,1,infinity,infinity,e1,1,249500
+matched,1000,2000,A,1,infinity,2,e1,1,999000
+matched,1000,2000,B,1,infinity,infinity,e1,1,999000
+matched,2500,5000,A,1,infinity,2,e1,1,6247500
+matched,2500,5000,B,1,infinity,infinity,e1,1,6247500
+matched,5000,10000,A,1,infinity,2,e1,1,24995000
+matched,5000,10000,B,1,infinity,infinity,e1,1,24995000
