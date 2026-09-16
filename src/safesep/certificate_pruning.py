@@ -5,7 +5,7 @@ This module does not claim asymptotic superiority. It instruments explored joint
 so the claimed benefit is empirical pruning on certified blocked instances only.
 """
 from functools import lru_cache
-from .dynamic_authority_cut import incompatible_pairs, executable, branches, next_tokens, dynamic_cut_certificate
+from .dynamic_authority_cut import incompatible_pairs, executable, progress_children, dynamic_cut_certificate
 
 
 def full_joint_search(P):
@@ -21,9 +21,9 @@ def full_joint_search(P):
         try:
             for e in P.probes:
                 if not executable(e,tokens): continue
-                bs=branches(e,C)
-                if len(bs)<2: continue
-                if all(win(B,next_tokens(e,o,tokens)) for o,B in bs): return True
+                children=progress_children(e,C,tokens)
+                if not children: continue
+                if all(win(B,T) for B,T in children): return True
             return False
         finally: visiting.discard(key)
     ok=win(frozenset(P.worlds),P.initial_tokens)
