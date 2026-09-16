@@ -4,7 +4,6 @@
 """Diagnostics for the cheapest experiment relative to decision incompatibility."""
 
 from dataclasses import dataclass
-from math import inf
 from typing import FrozenSet, Optional
 
 from .model import Problem, Experiment, World
@@ -33,7 +32,7 @@ def incompatible_pairs(problem: Problem, worlds: FrozenSet[World]) -> int:
         1
         for i in range(len(ws))
         for j in range(i + 1, len(ws))
-        if problem.decision(ws[i]) != problem.decision(ws[j])
+        if problem.decisions[ws[i]] != problem.decisions[ws[j]]
     )
 
 
@@ -52,7 +51,7 @@ def diagnose_experiment(problem: Problem, e: Experiment, worlds: FrozenSet[World
 
 
 def cheapest_experiment_leaving_incompatibility(problem: Problem, worlds: FrozenSet[World] | None = None, *, require_admissible: bool = False) -> Optional[ExperimentDiagnostic]:
-    """Return the cheapest informative experiment that still leaves a decision-incompatible branch.
+    """Cheapest informative experiment that still leaves a decision-incompatible branch.
 
     This directly operationalises the diagnostic question: which cheapest experiment,
     given current knowledge, fails to resolve all mutually incompatible possible worlds?
