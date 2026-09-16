@@ -1,0 +1,6 @@
+worlds,n,cheapest,cost,worst_incompatible_pairs,open_alpha,blocked_alpha,open_rest_obstructed,blocked_rest_obstructed,source
+200,100,q,1,9900,true,false,false,true,controlled_theorem
+1000,500,q,1,249500,true,false,false,true,controlled_theorem
+2000,1000,q,1,999000,true,false,false,true,controlled_theorem
+5000,2500,q,1,6247500,true,false,false,true,controlled_theorem
+10000,5000,q,1,24995000,true,false,false,true,controlled_theorem
