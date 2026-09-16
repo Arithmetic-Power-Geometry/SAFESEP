@@ -12,22 +12,18 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 ## Cheapest-experiment diagnostic
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective.
 
-Across the current proof-qualified, evidence-authority, matched-marginal and full joint-state planning constructions, the cheapest unresolved probe is `q`, cost 1. In the matched family it is identical in both systems and leaves exactly one incompatible residual branch with `n(n-1)` incompatible pairs: 9,900 at 200 worlds and 24,995,000 at 10,000 worlds.
+Across the current constructions, the cheapest unresolved probe remains `q`, cost 1. It leaves exactly one incompatible residual branch with `n(n-1)` incompatible pairs: 9,900 at 200 worlds and 24,995,000 at 10,000 worlds.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent planning, epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, non-circular authorization proofs, well-founded authorization semantics, recursive authorization, least-fixed-point credential closure, dynamic evidence gathering, or representing information and authority variables jointly in a planner.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent/epistemic planning, world-dependent action applicability, history/provenance/purpose/consent authorization, proof-carrying authorization, trust negotiation, cyclic credential dependencies, recursive authorization, dynamic evidence gathering, joint information-authority state representation, minimal credential disclosure, or generic cost-sensitive trust negotiation.
 
-## Current structural result: matched marginals do not determine joint resolvability
-For every `n>=2`, `A_n` and `B_n` match the tested separate information and authority summaries: same `2n` worlds, decisions, q cost/outcome partition, branch-size multiset, token multiset, resolver multiset, authority-edge count and cheapest-unresolved-probe statistics. They differ only in the alignment between q outcomes and authority-enabling tokens.
+## Structural results retained
+The matched-marginal family proves that the implemented separate information and authority summaries do not determine joint resolvability. The full joint-state planning attack then shows that ordinary contingent planning can encode the missing alignment once authority is exposed as state. Thus this is a summary-insufficiency result, not a new planning primitive.
 
-`A_n`: residual outcome -> `alpha` -> `resolve_rest`.
+## Authorization-safe evidence premium
+For a fixed problem P define `U(P)` as minimum decision-resolution cost when authority constraints are ignored and `S(P)` as minimum cost using only legitimately authorized experiments. Define `AP(P)=S(P)-U(P)`, with infinity when `U(P)` is finite but `S(P)` is infinite.
 
-`B_n`: residual outcome -> `beta` -> `resolve_special`.
-
-Therefore the tested marginals satisfy `M_info(A_n)=M_info(B_n)` and `M_auth(A_n)=M_auth(B_n)`, while residual resolvability differs. This is a valid structural separation of the listed summaries.
-
-## Full joint-state planning attack
-`src/safesep/joint_planning_baseline.py` independently exposes `(compatible worlds, acquired authority tokens)` as the planner state. It exactly reproduces the A/B separation. Hence the matched-marginal theorem does **not** establish irreducibility to contingent planning: the full branch-sensitive joint signature distinguishes the systems and ordinary contingent planning can encode the authority tokens as state propositions/effects.
+In the controlled witness, unconstrained resolution costs 1. The safely resolvable case requires `q` followed by the resolver, so `S=2` and `AP=1`; the authority-obstructed case has `S=infinity` and `AP=infinity`. This is a useful quantitative diagnostic, but broad authorization/disclosure-cost optimization already exists in cost-sensitive trust negotiation, so the premium alone is not claimed as breakthrough novelty.
 
 ## Datasets and empirical boundary
 - `data/cheapest_experiment_cases.csv` — cheapest-probe cases.
@@ -38,6 +34,7 @@ Therefore the tested marginals satisfy `M_info(A_n)=M_info(B_n)` and `M_auth(A_n
 - `data/evidence_authority_closure.csv` — recursive authority closure benchmark.
 - `data/joint_coupling_matched_marginals.csv` — matched separate marginals at 200 and 10,000 worlds.
 - `data/joint_planning_collision.csv` — full joint-state planning comparison through 10,000 worlds.
+- `data/authority_premium.csv` — authorization-safe evidence premium at 200 and 10,000 worlds.
 
 AuthBench remains real external-validity evidence, but it does not natively provide counterfactual authorization-proof/evidence-yield graphs. We do not fabricate those labels. Controlled 10,000-world benchmarks remain theorem stress tests.
 
@@ -74,19 +71,21 @@ AuthBench remains real external-validity evidence, but it does not natively prov
 30. Cheapest experiment under recursive authority closure — `q`, cost 1.
 31. Unseeded evidence-authority cycle cannot self-authorize.
 32. 10,000-world evidence-authority closure stress test.
-33. Matched-marginal cheapest experiment — both systems return `q`, cost 1, one unresolved branch; 9,900 incompatible pairs at 200 worlds.
+33. Matched-marginal cheapest experiment — `q`, cost 1; 9,900 incompatible pairs at 200 worlds.
 34. Separate-marginal equality.
 35. Joint-alignment separation.
 36. 10,000-world matched-marginal stress test — 24,995,000 incompatible pairs.
-37. **Full-planner cheapest-experiment preservation** — `q`, cost 1, still leaves incompatibility.
-38. **Combined-state planning collision** — ordinary joint-state contingent planning exactly reproduces A resolvable/B blocked.
-39. **Marginals-vs-joint-state test** — separate summaries match but full branch-sensitive state signatures differ.
-40. **10,000-world full-planner stress test** — `q` cost 1, 24,995,000 residual incompatible pairs; combined-state planner reproduces the separation.
+37. Full-planner cheapest-experiment preservation.
+38. Combined-state planning collision.
+39. Marginals-vs-joint-state test.
+40. 10,000-world full-planner stress test.
+41. **Authority-premium cheapest experiment** — `q`, cost 1, still leaves 9,900 incompatible pairs at 200 worlds.
+42. **Finite authorization premium** — unconstrained cost 1 versus legitimate cost 2, hence `AP=1`.
+43. **Infinite authorization premium under obstruction** — unconstrained cost remains 1 while legitimate resolution is impossible, hence `AP=infinity`.
+44. **10,000-world authority-premium stress test** — identical `q` diagnostic with 24,995,000 incompatible pairs; premium 1 versus infinity.
 
 ## Current novelty status
-**Do not write the paper yet.** The full joint-state attack is a clean negative novelty result: the matched-marginal separation survives as a summary-insufficiency theorem, but disappears as a representational novelty claim once authority is included in the contingent-planning state.
-
-The next stop-and-write candidate must survive full-state compilation. The strongest directions are now a restricted complexity theorem, an authorization-specific invariant/lower bound on legitimate evidence acquisition, or an empirical phenomenon with genuine authorization semantics. We will not claim a new planning primitive.
+**Do not write the paper yet.** The authorization-safe evidence premium is quantitatively useful, but cost-sensitive trust negotiation already optimizes credential/policy disclosure costs and minimal credential disclosure is established. The next candidate must be a genuinely authorization-specific lower bound/invariant tied to decision-incompatible possible-world pairs and legitimate evidence paths, and must be attacked against test cover, decision-region determination, trust-negotiation cost optimization, and constrained planning.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and narrow claims after every collision.
