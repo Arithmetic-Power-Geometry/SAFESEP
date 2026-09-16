@@ -1,0 +1,6 @@
+n,worlds,cheapest_unresolved,cost,worst_incompatible_pairs,unconstrained_cost,safe_cost,legitimacy_premium,data_kind
+100,200,q,1,9900,1,101,100,controlled_theorem
+500,1000,q,1,249500,1,501,500,controlled_theorem
+1000,2000,q,1,999000,1,1001,1000,controlled_theorem
+2500,5000,q,1,6247500,1,2501,2500,controlled_theorem
+5000,10000,q,1,24995000,1,5001,5000,controlled_theorem
