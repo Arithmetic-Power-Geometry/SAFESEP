@@ -1,0 +1,7 @@
+n,total_worlds,cheapest_unresolved,cost,residual_incompatible_pairs,cycle_seeded,resolvable
+100,200,q,1,9900,false,false
+100,200,q,1,9900,true,true
+500,1000,q,1,249500,false,false
+1000,2000,q,1,999000,false,false
+2500,5000,q,1,6247500,false,false
+5000,10000,q,1,24995000,false,false
