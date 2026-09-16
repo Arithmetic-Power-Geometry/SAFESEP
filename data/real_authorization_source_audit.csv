@@ -1,4 +1,4 @@
 source,real_or_controlled,reported_scale,contains_real_permissions,contains_probe_outcomes,contains_counterfactual_world_probe_admissibility,contains_decision_independent_justification,label_for_safesep_use
-AuthBench,real_public_agent_benchmark,"public repository; task collection and permission-generation/replay infrastructure",yes,partial,no,no,"external-validity source; cannot directly estimate DN-SafeSep without an explicit non-fabricated mapping"
+AuthBench,real_public_agent_benchmark,"120 tasks; 80 standard + 40 sensitive; 10 categories; gold read/write/execute permissions; constrained replay",yes,partial,no,no,"external-validity source; cannot directly estimate DN-SafeSep/DRAC without non-fabricated proof-dependency labels"
 Amazon_employee_access,real_public_access_dataset,"32769 authorization records; 9560 users; 7517 resources (published characterization)",yes,no,no,no,"authorization-distribution baseline only"
 SAFESEP_large_matched,controlled_structural,"200-10000 explicit worlds",synthetic,yes,yes,yes,"theorem/structural stress test; not real-world evidence"
