@@ -1,0 +1,11 @@
+worlds,n,case,cheapest_unresolved,cost,worst_incompatible_pairs,token_only_progress,expected_resolvable,source
+200,100,OPEN,q,1,9900,true,true,controlled_theorem
+200,100,BLOCKED,q,1,9900,false,false,controlled_theorem
+1000,500,OPEN,q,1,249500,true,true,controlled_theorem
+1000,500,BLOCKED,q,1,249500,false,false,controlled_theorem
+2000,1000,OPEN,q,1,999000,true,true,controlled_theorem
+2000,1000,BLOCKED,q,1,999000,false,false,controlled_theorem
+5000,2500,OPEN,q,1,6247500,true,true,controlled_theorem
+5000,2500,BLOCKED,q,1,6247500,false,false,controlled_theorem
+10000,5000,OPEN,q,1,24995000,true,true,controlled_theorem
+10000,5000,BLOCKED,q,1,24995000,false,false,controlled_theorem
