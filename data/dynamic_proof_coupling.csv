@@ -1,0 +1,7 @@
+n,total_worlds,root_cheapest_probe,root_cost,residual_worlds,A_resolver_after_q,B_resolver_after_q,A_DRAC_exists,B_DRAC_exists
+50,100,q,1,99,true,false,true,false
+100,200,q,1,199,true,false,true,false
+500,1000,q,1,999,true,false,true,false
+1000,2000,q,1,1999,true,false,true,false
+2500,5000,q,1,4999,true,false,true,false
+5000,10000,q,1,9999,true,false,true,false
