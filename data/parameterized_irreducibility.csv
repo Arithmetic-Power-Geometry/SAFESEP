@@ -1,0 +1,13 @@
+n,worlds,system,arc_like,carc_one_step,safesep,admissibility_counts,interpretation
+2,4,A,1,infinity,2,"4;3",branchwise safe resolution exists
+2,4,B,1,infinity,infinity,"4;3",matched summaries but safe resolution impossible
+3,6,A,1,infinity,2,"6;5",branchwise safe resolution exists
+3,6,B,1,infinity,infinity,"6;5",matched summaries but safe resolution impossible
+5,10,A,1,infinity,2,"10;9",branchwise safe resolution exists
+5,10,B,1,infinity,infinity,"10;9",matched summaries but safe resolution impossible
+10,20,A,1,infinity,2,"20;19",branchwise safe resolution exists
+10,20,B,1,infinity,infinity,"20;19",matched summaries but safe resolution impossible
+20,40,A,1,infinity,2,"40;39",branchwise safe resolution exists
+20,40,B,1,infinity,infinity,"40;39",matched summaries but safe resolution impossible
+50,100,A,1,infinity,2,"100;99",branchwise safe resolution exists
+50,100,B,1,infinity,infinity,"100;99",matched summaries but safe resolution impossible
