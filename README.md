@@ -2,92 +2,59 @@
 
 **Copyright (C) 2026 Mohammad Amir Khusru Akhtar**
 
-SAFESEP is a formal and reproducible research framework for deciding whether an autonomous AI agent can resolve an authorization decision using only evidence-gathering actions that are themselves justified by the information currently available.
+SAFESEP studies whether an autonomous agent can resolve an authorization decision using evidence-gathering actions that are themselves justified by the information currently available.
 
 > **Know enough to grant — but never grant to know.**
 
-## Core question
-
-Given current knowledge, several possible worlds may remain compatible while demanding different authorization decisions. SAFESEP asks whether those decision-incompatible worlds can be separated by an adaptive sequence of probes such that every probe is authorized in every world still possible on its branch. The exact world need not be identified; resolution occurs when all remaining worlds require the same authorization decision.
-
-## Formal model
-
-A finite instance has worlds `W`, current set `C`, decision `D(w)`, experiments `e`, outcomes `O_e(w)`, costs `c(e)`, and world-dependent admissibility `Adm(e,w)`. `C` is decision-critical iff `|{D(w):w∈C}|>1`. Experiment `e` is safely admissible at `C` iff `Adm(e,w)=1` for every `w∈C`. Outcome `o` contracts knowledge to `C_(e,o)={w∈C:O_e(w)=o}`.
-
-A valid adaptive tree uses only safely admissible probes and terminates only at decision-homogeneous leaves. `SafeSep(C)` is its minimum worst-case accumulated cost; if no finite valid tree exists, `SafeSep(C)=∞`.
+## Core model
+A finite instance has worlds `W`, current set `C`, decision `D(w)`, experiments `e`, outcomes `O_e(w)`, costs `c(e)`, and world-dependent admissibility `Adm(e,w)`. Resolution occurs when `|{D(w):w∈C}|=1`. A probe is branchwise safe iff it is admissible in every world still possible on that branch. `SafeSep(C)` is the minimum worst-case cost of a resolving adaptive tree; it is infinite if no such tree exists.
 
 ## Cheapest-experiment diagnostic
+We test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is only a diagnostic, not the optimization objective. The matched family has the same cheapest safe root probe, same cost, same number of incompatible branches and same incompatible-pair count, yet finite versus infinite SafeSep.
 
-We explicitly test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** This is a diagnostic, not the SafeSep objective. In the matched family, both systems have the same cheapest safe informative root probe `e1`, cost 1, one incompatible branch, and `n(n-1)` worst-case incompatible pairs, yet one has finite SafeSep and the other infinite SafeSep.
+## Important prior-art collision
+A targeted comparison with classical strong/conditional planning under partial observability found a major overlap: prior planning work already performs AND/OR search over belief states, uses conditional observation trees, and defines an action as applicable to an uncertain belief only when it is applicable in every state represented by that belief. Consequently **belief-universal action admissibility, branchwise sensing, conditional resolution trees, and SAFESEP-EXISTS as a bare planning structure are not claimed as novel.** See `docs/CONTINGENT_PLANNING_COLLISION.md`.
 
-## Baselines and prior-art boundary
-
-**ARC-like:** minimum decision-resolution cost ignoring admissibility. **CARC-like one-step:** cheapest currently admissible single experiment whose every outcome is decision-homogeneous.
-
-When every experiment is universally admissible, SAFESEP's decision target reduces to Equivalence Class Determination with classes `D^{-1}(d)`. Decision Region Determination already covers decision-directed adaptive information acquisition more generally, and active diagnosis/adaptive testing already use conditional plans and safety constraints. SAFESEP therefore does not claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, least privilege, JIT/task-scoped authorization, POMDP information gathering, value of information, trust negotiation, or conditional/epistemic planning.
-
-The surviving candidate is **authorization-dependent safe separability**: unresolved worlds jointly determine both the required authorization decision and whether the evidence-producing action is currently legal.
+The surviving research frontier is narrower: **endogenous authorization of epistemic actions**—the unresolved authorization state is simultaneously what the agent must learn and what determines whether the learning action is legally/organizationally permitted. Mere encoding of this coupling as ordinary planning preconditions is not enough for novelty; we now require an authorization-specific theorem or separation that uses the coupling essentially.
 
 ## Parameterized matched-summary separation
-
-For every `n>=2`, `A_n` and `B_n` contain `2n` worlds: READ worlds `r0,...,r(n-1)` and WRITE worlds `w0,...,w(n-1)`. Probe `e1` is universally admissible, isolates `r0`, and otherwise yields a residual branch. Probe `e2` reveals R versus W. Both systems have identical worlds, decisions, costs, complete outcome maps and admissibility counts.
-
-In `A_n`, `e2` is admissible exactly on the residual branch after `e1`, giving a safe tree of cost 2. In `B_n`, `r1` is removed from `e2`'s admissibility set and already-eliminated `r0` inserted instead. The count is unchanged, but `e2` is forbidden on the residual branch. Thus `ARC(A_n)=ARC(B_n)=1`, `CARC(A_n)=CARC(B_n)=∞`, but `SafeSep(A_n)=2` and `SafeSep(B_n)=∞`.
+For every `n>=2`, `A_n` and `B_n` have `2n` worlds and identical decisions, probe costs, complete outcome maps, aggregate admissibility counts, unconstrained resolution cost, one-step closed resolution, and cheapest-root-probe statistics. They differ only in world × probe admissibility incidence. Nevertheless `SafeSep(A_n)=2` while `SafeSep(B_n)=∞`. This remains a useful structural result, but after the contingent-planning collision it is treated as an authorization-interpretation result rather than proof of a new planning primitive.
 
 ## SAFESEP-EXISTS
-
-`SAFESEP-EXISTS(P)` asks only whether `SafeSep(P)<∞`. The repository now contains an independent exact AND-OR/fixed-point existence solver. With `N` explicit worlds, at most `2^N` knowledge subsets can be encountered, giving a direct exponential-time upper bound with polynomial work per subset. This is **not** a hardness result. We explicitly do not infer NP-, PSPACE-, or EXPTIME-hardness merely from the exponential algorithm. See `docs/COMPLEXITY_AND_REAL_DATA.md`.
-
-## Reproducible results
-
-| Case | ARC-like | CARC one-step | SafeSep | Meaning |
-|---|---:|---:|---:|---|
-| minimal deadlock | 1 | ∞ | ∞ | information exists but safe resolution fails |
-| adaptive safe | 1 | ∞ | 2 | branchwise resolution succeeds after one-step failure |
-| homogeneous | 0 | 0 | 0 | no probe needed |
-| matched A_n | 1 | ∞ | 2 | safely resolvable |
-| matched B_n | 1 | ∞ | ∞ | matched summaries but obstructed |
+`SAFESEP-EXISTS(P)` asks whether `SafeSep(P)<∞`. The exact repository solver explores at most `2^N` explicit knowledge subsets. This is an algorithmic upper bound, not a hardness result. Because strong contingent planning already studies closely related belief-space existence problems, no complexity novelty is claimed without a reduction that isolates genuinely authorization-specific structure.
 
 ## Datasets
-
 - `data/cheapest_experiment_cases.csv` — cheapest-probe cases.
 - `data/parameterized_irreducibility.csv` — matched family through 100 worlds.
-- `data/large_authorization_benchmark.csv` — controlled benchmark from 200 through 10,000 explicit worlds.
+- `data/large_authorization_benchmark.csv` — controlled structural benchmark through 10,000 explicit worlds.
 
-For empirical external validity, the project tracks real/public authorization sources separately. Published work characterizes the Amazon employee access dataset at 32,769 authorization records, 9,560 users and 7,517 resources. AuthBench provides agent tasks with gold read/write/execute permission annotations and policy-constrained replay. Real-world AWS serverless studies provide another route to empirical IAM policy structure. These sources do **not** directly provide SAFESEP's counterfactual world × probe-admissibility matrix, so we will not fabricate it. A real-data adapter must specify that mapping before any empirical SafeSep claim is made.
+Real/public authorization sources are tracked separately. Existing employee-access and agent-permission datasets do not directly contain SAFESEP's counterfactual world × probe-admissibility relation, so the project will not fabricate that relation and call it real data.
 
 ## Test registry
-
 Scientifically meaningful tests are permanent repository tests and their results are preserved.
 
-1. **Minimal authorization deadlock** — finite unconstrained distinguishability with `SafeSep=∞`.
-2. **Adaptive safe resolution** — branchwise admissibility gives finite SafeSep despite no one-step resolver.
-3. **Decision-homogeneous zero cost**.
-4. **Matched-summary irreducibility**.
-5. **Cheapest admissible experiment leaves incompatibility**.
-6. **Adaptive-safe has no admissible one-step resolver**.
-7. **Deadlock has no admissible one-step resolver**.
-8. **Parameterized irreducibility, n=2..20**.
-9. **Scale invariance through 100 worlds**.
-10. **Parameterized analytic construction invariants, n=2..50**.
-11. **Cheapest-probe irreducibility** — identical cheapest-probe statistics but finite/infinite SafeSep.
-12. **Large matched-family structural invariants** — validates exact separation structure through 10,000 worlds.
-13. **Large constructive safe-tree/obstruction test** — independently checks the two-step witness for A and residual authorization obstruction for B.
-14. **SAFESEP-EXISTS/optimization equivalence on core cases** — independently verifies the yes/no fixed-point solver agrees with finite versus infinite minimum-cost SafeSep.
-15. **SAFESEP-EXISTS parameterized separation** — verifies existence for `A_n` and nonexistence for `B_n`, `n=2..30`, without using cost values.
-
-Current test files include `test_safesep.py`, `test_irreducibility.py`, `test_cheapest_experiment.py`, `test_parameterized_irreducibility.py`, `test_large_authorization_benchmark.py`, and `test_existence.py`.
+1. Minimal authorization deadlock.
+2. Adaptive safe resolution.
+3. Decision-homogeneous zero cost.
+4. Matched-summary irreducibility.
+5. Cheapest admissible experiment leaves incompatibility.
+6. Adaptive-safe has no admissible one-step resolver.
+7. Deadlock has no admissible one-step resolver.
+8. Parameterized irreducibility, n=2..20.
+9. Scale invariance through 100 worlds.
+10. Parameterized analytic construction invariants, n=2..50.
+11. Cheapest-probe irreducibility.
+12. Large matched-family structural invariants through 10,000 worlds.
+13. Large constructive safe-tree/obstruction test.
+14. SAFESEP-EXISTS/optimization equivalence on core cases.
+15. SAFESEP-EXISTS parameterized separation, n=2..30.
+16. **Contingent-planning collision audit** — literature-level falsification test showing that universal belief-state applicability and AND/OR conditional planning are established ancestors; preserved in `docs/CONTINGENT_PLANNING_COLLISION.md` and used to prohibit overclaiming.
 
 ## Current novelty status
-
-The strongest surviving result is an infinite matched-summary family showing that authorization safe resolvability depends on branch-level world × probe-admissibility incidence even when worlds, decision classes, outcome maps, costs, admissibility counts, unconstrained resolution, one-step closed resolution and cheapest-root-probe statistics coincide. The new existence solver confirms the separation is about resolvability itself rather than cost arithmetic.
-
-This is still not proof that general active-diagnosis or contingent-planning formalisms cannot encode SAFESEP. The next decisive mathematical target is a rigorous lower-bound reduction for the exact finite SAFESEP model, or a proof that its existence problem falls into a simpler class. We will stop novelty hunting and write the paper once the authorization-dependent incidence result plus its complexity boundary is strong enough to survive this comparison.
+**Do not write the paper yet.** The latest prior-art attack materially narrows the novelty claim. The matched incidence family is valid, but its general computational mechanism is representable inside established contingent planning. The next breakthrough criterion is therefore stronger: prove an invariant, impossibility, separation, or quantitative law that follows specifically from authorization being endogenous to evidence acquisition and is not merely a restatement of ordinary action preconditions.
 
 ## Research protocol
-
-For every significant result: formulate the claim; attack it with prior art; construct a witness/counterexample; compare baselines; use a dataset when meaningful; save code/data/results; add a permanent regression test; append this registry; run CI; and narrow claims whenever an ancestor already contains the general idea.
+For every significant result: formulate; attack with prior art; build a witness/counterexample; compare baselines; use real data only where semantics are genuine; save code/data/results; preserve significant tests; run CI; and narrow claims whenever an ancestor already contains the general idea.
 
 ## License
-
 Apache License 2.0. See `LICENSE`.
