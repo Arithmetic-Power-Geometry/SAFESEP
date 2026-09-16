@@ -55,6 +55,23 @@ def next_tokens(e: Probe, outcome: str, tokens: FrozenSet[str]):
     return tokens | e.grants.get(outcome, frozenset())
 
 
+def progress_children(e: Probe, C: FrozenSet[World], tokens: FrozenSet[str]):
+    """Return successors only when the probe makes epistemic or authority progress.
+
+    A one-outcome probe is significant when it grants a new authority token. A true
+    no-op (same compatible worlds and same tokens) is skipped, preventing self-loops.
+    """
+    children=[]
+    for o,B in branches(e,C):
+        T=next_tokens(e,o,tokens)
+        children.append((B,T))
+    if len(children) > 1:
+        return children
+    if children and children[0] != (C,tokens):
+        return children
+    return []
+
+
 def cheapest_unresolved(P: Problem, C=None, tokens=None):
     C = frozenset(P.worlds) if C is None else frozenset(C)
     tokens = P.initial_tokens if tokens is None else frozenset(tokens)
@@ -82,18 +99,14 @@ def reachable_without(P: Problem, forbidden: FrozenSet[str]):
         for e in P.probes:
             if e.name in forbidden or not executable(e,tokens):
                 continue
-            bs=branches(e,C)
-            if len(bs)<2:
-                continue
-            for o,B in bs:
-                s=(B,next_tokens(e,o,tokens))
+            for s in progress_children(e,C,tokens):
                 if s not in seen:
                     seen.add(s); stack.append(s)
     return seen
 
 
 def resolvable_without(P: Problem, forbidden: FrozenSet[str]) -> bool:
-    """Exact restricted AND/OR check: can all branches resolve without forbidden probes?"""
+    """Exact restricted AND/OR check including token-only authority transitions."""
     visiting=set()
     @lru_cache(maxsize=None)
     def win(C, tokens):
@@ -108,10 +121,9 @@ def resolvable_without(P: Problem, forbidden: FrozenSet[str]) -> bool:
             for e in P.probes:
                 if e.name in forbidden or not executable(e,tokens):
                     continue
-                bs=branches(e,C)
-                if len(bs)<2:
+                children=progress_children(e,C,tokens)
+                if not children:
                     continue
-                children=[(B,next_tokens(e,o,tokens)) for o,B in bs]
                 if all(win(B,T) for B,T in children):
                     return True
             return False
@@ -127,8 +139,7 @@ def dynamic_cut_certificate(P: Problem, cut: FrozenSet[str]):
     1) removing `cut` destroys every complete resolving policy;
     2) no cut probe is executable in any decision-critical state reachable without cut.
 
-    Then any successful policy would require a first cut use, but no such first use is
-    authorized. This is deliberately compared against ordinary planning dead-end/cut ideas.
+    Reachability includes non-informative actions that change authority state.
     """
     root=frozenset(P.worlds)
     mandatory=not resolvable_without(P,cut)
