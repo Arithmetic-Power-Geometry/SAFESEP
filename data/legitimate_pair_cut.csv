@@ -1,0 +1,6 @@
+n,total_worlds,incompatible_pairs,cheapest_legitimate_unresolved,cost,A_resolver_legitimate,B_resolver_legitimate,A_uncovered_pairs,B_uncovered_pairs
+100,200,10000,q,1,true,false,0,positive
+500,1000,250000,q,1,true,false,0,positive
+1000,2000,1000000,q,1,true,false,0,positive
+2500,5000,6250000,q,1,true,false,0,positive
+5000,10000,25000000,q,1,true,false,0,positive
