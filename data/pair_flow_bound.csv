@@ -1,0 +1,6 @@
+data_kind,n,worlds,root_pair_mass,cheapest_unresolved,cost,worst_residual_pairs,q_worst_pair_reduction
+controlled_theorem,100,200,10000,q,1,9900,100
+controlled_theorem,500,1000,250000,q,1,249500,500
+controlled_theorem,1000,2000,1000000,q,1,999000,1000
+controlled_theorem,2500,5000,6250000,q,1,6247500,2500
+controlled_theorem,5000,10000,25000000,q,1,24995000,5000
