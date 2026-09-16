@@ -13,44 +13,52 @@ Given compatible worlds `C` requiring potentially different authorization decisi
 We permanently test: **What is the cheapest informative experiment, given current knowledge, that still leaves at least one branch containing mutually authorization-incompatible possible worlds?** Across current constructions the diagnostic remains `q`, cost 1. It leaves 9,900 incompatible pairs at 200 worlds and 24,995,000 at the controlled 10,000-world scale.
 
 ## Prior-art collisions established
-SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent/epistemic planning, world-dependent applicability, history/provenance authorization, proof-carrying authorization, trust negotiation, cyclic credentials, recursive authorization, dynamic evidence gathering, joint information-authority state representation, minimal credential disclosure, generic cost-sensitive trust negotiation, pair separation, minimum test cover, or decision-region/equivalence-class edge cutting.
+SAFESEP does **not** claim novelty for equivalence-class stopping, adaptive test selection, active diagnosis, safe sensing, contingent/epistemic planning, world-dependent applicability, history/provenance authorization, proof-carrying authorization, trust negotiation, cyclic credentials, recursive authorization, dynamic evidence gathering, joint information-authority state representation, minimal credential disclosure, generic cost-sensitive trust negotiation, pair separation, minimum test cover, decision-region edge cutting, generic planning landmarks, or generic unavoidable-deadend reasoning.
 
 ## Structural results retained
-Matched information/authority marginals do not determine joint resolvability, but full joint-state planning can encode the missing alignment. The authorization-safe evidence premium quantifies extra legitimate cost, but disclosure-cost optimization is established. The static legitimate-pair cut is a useful impossibility certificate but reduces to test-cover/DRD structure after filtering unavailable tests.
+Matched information/authority marginals do not determine joint resolvability, but full joint-state planning can encode the missing alignment. The authorization-safe evidence premium quantifies extra legitimate cost, but disclosure-cost optimization is established. Static pair cuts reduce to test-cover/DRD structure after filtering unavailable tests.
 
-## Dynamic branch-relative authorization cut
-Let a joint state be `S=(C,A)`, compatible worlds plus currently held authority facts, and let `K` be a set of decision-separating probes. A sufficient deadlock certificate is:
+## Dynamic branch-relative authorization cut — corrected
+Let joint state be `S=(C,A)` and let `K` be a candidate mandatory probe set. The corrected sufficient certificate is:
 
-1. every decision-incompatible root pair can be separated only by a probe in `K`; and
-2. in every decision-critical joint state reachable without using `K`, every probe in `K` is unauthorized.
+1. after removing K, **no complete resolving policy exists** (non-cut probes may still resolve some branches); and
+2. in every decision-critical joint state reachable without K, every probe in K is unauthorized.
 
-Then no legitimate resolving policy exists: any resolving policy must have a first use of `K`, but its predecessor is a decision-critical state reachable without `K`, where condition 2 says no member of `K` is executable.
+Then no legitimate resolving policy exists: a successful policy would require a first use of K, but no such first use is executable.
 
-In the controlled OPEN/BLOCKED witness, `q` is the cheapest unresolved probe at cost 1. Resolver `r` is the mandatory cut and requires token `alpha`. OPEN grants alpha after q's residual outcome, so the certificate correctly rejects deadlock. BLOCKED never grants alpha, so the certificate proves deadlock. This is a compact sufficient authorization-deadlock certificate, **not yet a claimed breakthrough**: full-state contingent planning can represent the same state transition, and planning dead-end/landmark/cut literature remains the next collision target.
+### CI-discovered scientific correction
+The first implementation incorrectly required every incompatible root pair to be separable only by K. GitHub CI rejected Tests 49–52. That condition was too strong because q can separate some incompatible pairs while every complete policy still requires r on the residual branch. The code and theorem statement were corrected to exact restricted AND/OR semantics. The failure is documented in `results/CERTIFICATE_VS_PLANNER.md` rather than hidden.
+
+## Certificate vs full planner
+`certificate_pruning.py` independently instruments full joint-state search. The corrected authorization-cut certificate agrees with full search on the parameterized OPEN/BLOCKED witnesses. However, the current mandatory-cut test itself performs restricted AND/OR reasoning. Therefore **no asymptotic complexity advantage is claimed**. This collision is consistent with established strong contingent planning, unavoidable-deadend analysis, and landmark-guided contingent planning.
 
 ## Datasets and empirical boundary
-Controlled theorem datasets include `large_authorization_benchmark.csv`, `dynamic_proof_coupling.csv`, `evidence_authority_closure.csv`, `joint_coupling_matched_marginals.csv`, `joint_planning_collision.csv`, `authority_premium.csv`, `legitimate_pair_cut.csv`, and `dynamic_authority_cut.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. AuthBench is retained as real external-validity evidence, but it does not natively provide counterfactual world×experiment outcomes plus legitimate-executability/proof labels; we do not fabricate them.
+Controlled theorem datasets include `large_authorization_benchmark.csv`, `dynamic_proof_coupling.csv`, `evidence_authority_closure.csv`, `joint_coupling_matched_marginals.csv`, `joint_planning_collision.csv`, `authority_premium.csv`, `legitimate_pair_cut.csv`, `dynamic_authority_cut.csv`, and `certificate_planner_comparison.csv`, scaling through 10,000 worlds. `real_authorization_source_audit.csv` records real-source coverage. AuthBench remains real external-validity evidence, but it does not natively provide the counterfactual world×probe outcomes plus legitimate-executability/proof labels required by these theorems; we do not fabricate them.
 
 ## Test registry
 1–40. Previous SAFESEP regression and collision tests retained unchanged.
-41. **Authority-premium cheapest experiment** — `q`, cost 1; 9,900 residual incompatible pairs at 200 worlds.
-42. **Finite authorization premium** — unconstrained cost 1 versus legitimate cost 2, `AP=1`.
-43. **Infinite authorization premium** — unconstrained cost 1 versus legitimate impossibility, `AP=infinity`.
-44. **10,000-world authority-premium stress** — 24,995,000 residual incompatible pairs.
-45. **Legitimate pair-cut cheapest probe** — `q`, cost 1, still leaves 9,900 incompatible pairs at 200 worlds.
-46. **Uncovered-pair impossibility certificate** — static legitimate cover detects obstruction.
-47. **Raw-information equality / usable-cover separation** — identical information, different legitimate pair cover.
-48. **10,000-world pair-cut structural stress** — 24,995,000 residual incompatible pairs.
-49. **Dynamic-cut cheapest probe** — `q`, cost 1, leaves 9,900 incompatible pairs at 200 worlds.
-50. **Dynamic mandatory-cut deadlock certificate** — BLOCKED satisfies mandatory-cut plus pre-cut authorization obstruction.
-51. **Certificate rejection on resolvable system** — OPEN grants the cut authority after `q`, so the deadlock certificate correctly fails.
-52. **10,000-world dynamic-cut structural stress** — same `q` diagnostic and 24,995,000 residual incompatible pairs; scale-invariant certificate structure checked without materializing O(N^2) pairs in CI.
+41. Authority-premium cheapest experiment — q, cost 1; 9,900 residual incompatible pairs.
+42. Finite authorization premium — unconstrained 1 versus legitimate 2.
+43. Infinite authorization premium under obstruction.
+44. 10,000-world authority-premium stress.
+45. Legitimate pair-cut cheapest probe.
+46. Static uncovered-pair obstruction.
+47. Raw-information equality / usable-cover separation.
+48. 10,000-world pair-cut stress.
+49. Dynamic-cut cheapest probe — q, cost 1, 9,900 residual incompatible pairs.
+50. Corrected dynamic mandatory-cut deadlock certificate.
+51. Certificate rejection on OPEN system after q grants alpha.
+52. 10,000-world dynamic-cut structural stress.
+53. **Cheapest-probe preservation after CI correction** — q, cost 1, 9,900 pairs.
+54. **Corrected cut semantics regression** — BLOCKED certifies; OPEN does not.
+55. **Certificate/full-planner agreement** — parameterized comparison through n=30.
+56. **10,000-world certificate/planner structural stress** — 24,995,000 residual incompatible pairs with scale-invariant obstruction.
 
 ## Current novelty status
-**Do not write the paper yet.** The dynamic authorization cut is stronger than the static pair-cover certificate because legitimacy changes along branches, but it is still representable in the full joint state. The next decisive attack is against planning dead-end certificates, landmarks/action cuts, strong cyclic/contingent planning, and AND/OR reachability. We stop novelty hunting only if a theorem, invariant, lower bound, or algorithmic advantage remains after that reduction.
+**Do not write the paper yet.** The latest comparison removes another possible overclaim: the dynamic cut is a useful authorization interpretation of mandatory-action/deadend structure, but its present exact check is not cheaper than planning search in principle. The next stop-and-write candidate is narrower: an authorization-dependency-graph certificate computable without belief-space AND/OR search, with a proved soundness theorem and a polynomial-time obstruction test for a nontrivial restricted SAFESEP class. That would be materially stronger than renaming a planning deadend.
 
 ## Research protocol
-For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and narrow claims after every collision.
+For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
 
 ## License
 Apache License 2.0. See `LICENSE`.
