@@ -10,12 +10,17 @@ def tiny(n):
     return W,d
 
 
-def chain(n):
+def decision_outcomes(W,d):
+    return tuple(d[w] for w in W)
+
+
+def chain(n, W=None, d=None):
+    W,d = tiny(2) if W is None else (W,d)
     ps=[]
     for i in range(n):
         req=frozenset() if i==0 else frozenset({f't{i-1}'})
-        ps.append(Probe(f'a{i}',1,('same',)*4,req,frozenset({f't{i}'})))
-    ps.append(Probe('k',1,('R','R','W','W'),frozenset({f't{n-1}'})))
+        ps.append(Probe(f'a{i}',1,('same',)*len(W),req,frozenset({f't{i}'})))
+    ps.append(Probe('k',1,decision_outcomes(W,d),frozenset({f't{n-1}'})))
     return tuple(ps)
 
 
@@ -24,32 +29,32 @@ def test_228_pure_sensing_certified(): assert commutation_certificate((Probe('s'
 def test_229_authority_only_grant_certified(): assert commutation_certificate((Probe('a',1,('x','x'),grants=frozenset({'t'})),))[0]
 def test_230_informative_grant_rejected(): assert not commutation_certificate((Probe('s',1,('0','1'),grants=frozenset({'t'})),))[0]
 def test_231_chain_one_agrees():
-    W,d=tiny(2); p=chain(1); assert certified_compare(W,d,p)['agree']
+    W,d=tiny(2); p=chain(1,W,d); assert certified_compare(W,d,p)['agree']
 def test_232_chain_two_agrees():
-    W,d=tiny(2); p=chain(2); assert certified_compare(W,d,p)['agree']
+    W,d=tiny(2); p=chain(2,W,d); assert certified_compare(W,d,p)['agree']
 def test_233_chain_eight_agrees():
-    W,d=tiny(2); p=chain(8); assert certified_compare(W,d,p)['agree']
+    W,d=tiny(2); p=chain(8,W,d); assert certified_compare(W,d,p)['agree']
 def test_234_missing_chain_token_blocks_both():
-    W,d=tiny(2); p=(Probe('k',1,('R','R','W','W'),frozenset({'z'})),); assert compare_solvers(W,d,p)==(False,False)
+    W,d=tiny(2); p=(Probe('k',1,decision_outcomes(W,d),frozenset({'z'})),); assert compare_solvers(W,d,p)==(False,False)
 def test_235_initial_token_resolves_both():
-    W,d=tiny(2); p=(Probe('k',1,('R','R','W','W'),frozenset({'z'})),); assert compare_solvers(W,d,p,frozenset({'z'}))==(True,True)
+    W,d=tiny(2); p=(Probe('k',1,decision_outcomes(W,d),frozenset({'z'})),); assert compare_solvers(W,d,p,frozenset({'z'}))==(True,True)
 def test_236_redundant_authority_grant_harmless():
-    W,d=tiny(2); p=(Probe('a',1,('s',)*4,grants=frozenset({'x'})),Probe('b',1,('s',)*4,grants=frozenset({'x'})),Probe('k',1,('R','R','W','W'),frozenset({'x'}))); assert compare_solvers(W,d,p)==(True,True)
+    W,d=tiny(2); p=(Probe('a',1,('s',)*len(W),grants=frozenset({'x'})),Probe('b',1,('s',)*len(W),grants=frozenset({'x'})),Probe('k',1,decision_outcomes(W,d),frozenset({'x'}))); assert compare_solvers(W,d,p)==(True,True)
 def test_237_authority_cycle_unseeded_blocks():
-    W,d=tiny(2); p=(Probe('a',1,('s',)*4,frozenset({'y'}),frozenset({'x'})),Probe('b',1,('s',)*4,frozenset({'x'}),frozenset({'y'})),Probe('k',1,('R','R','W','W'),frozenset({'x'}))); assert compare_solvers(W,d,p)==(False,False)
+    W,d=tiny(2); p=(Probe('a',1,('s',)*len(W),frozenset({'y'}),frozenset({'x'})),Probe('b',1,('s',)*len(W),frozenset({'x'}),frozenset({'y'})),Probe('k',1,decision_outcomes(W,d),frozenset({'x'}))); assert compare_solvers(W,d,p)==(False,False)
 def test_238_authority_cycle_seeded_resolves():
-    W,d=tiny(2); p=(Probe('a',1,('s',)*4,frozenset({'y'}),frozenset({'x'})),Probe('b',1,('s',)*4,frozenset({'x'}),frozenset({'y'})),Probe('k',1,('R','R','W','W'),frozenset({'x'}))); assert compare_solvers(W,d,p,frozenset({'y'}))==(True,True)
+    W,d=tiny(2); p=(Probe('a',1,('s',)*len(W),frozenset({'y'}),frozenset({'x'})),Probe('b',1,('s',)*len(W),frozenset({'x'}),frozenset({'y'})),Probe('k',1,decision_outcomes(W,d),frozenset({'x'}))); assert compare_solvers(W,d,p,frozenset({'y'}))==(True,True)
 def test_239_action_order_invariance():
-    W,d=tiny(2); p=chain(3); assert compare_solvers(W,d,p)==compare_solvers(W,d,tuple(reversed(p)))
+    W,d=tiny(2); p=chain(3,W,d); assert compare_solvers(W,d,p)==compare_solvers(W,d,tuple(reversed(p)))
 def test_240_world_renaming_invariance():
-    W,d=tiny(2); p=chain(2); assert compare_solvers(W,d,p)==(True,True)
+    W,d=tiny(2); p=chain(2,W,d); assert compare_solvers(W,d,p)==(True,True)
 def test_241_random_certified_250():
     rng=random.Random(227241); W,d=tiny(3)
     for z in range(250):
         ps=[]
         for j in range(4):
             if rng.random()<.5:
-                g=frozenset({f't{j}'}) if rng.random()<.7 else frozenset(); outs=('s',)*6
+                g=frozenset({f't{j}'}) if rng.random()<.7 else frozenset(); outs=('s',)*len(W)
             else:
                 g=frozenset(); outs=tuple(str(rng.randrange(2)) for _ in W)
             ps.append(Probe(f'p{j}',1,outs,grants=g))
@@ -58,7 +63,7 @@ def test_241_random_certified_250():
 def test_242_random_certified_1000():
     rng=random.Random(227242); W,d=tiny(2)
     for z in range(1000):
-        a=Probe('a',1,('s',)*4,grants=frozenset({'x'}) if rng.random()<.5 else frozenset())
+        a=Probe('a',1,('s',)*len(W),grants=frozenset({'x'}) if rng.random()<.5 else frozenset())
         k=Probe('k',1,tuple(rng.choice(('0','1')) for _ in W))
         assert certified_compare(W,d,(a,k))['agree']
 def test_243_out_of_class_not_claimed_impossible():
