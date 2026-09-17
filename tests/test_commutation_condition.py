@@ -5,8 +5,11 @@ from safesep.commutation_condition import commutation_certificate, certified_com
 
 
 def tiny(n):
-    W=tuple([f'r{i}' for i in range(n)]+[f'w{i}' for i in range(n)])
-    d={w:('R' if w[0]=='r' else 'W') for w in W}
+    # Probe.outcome indexes worlds by the numeric suffix, so use unique w0..w(2n-1)
+    # identifiers.  Earlier r0/r1/w0/w1 aliases mapped r0 and w0 to the same
+    # outcome slot and made valid authority tests appear unresolved.
+    W=tuple(f'w{i}' for i in range(2*n))
+    d={w:('R' if i<n else 'W') for i,w in enumerate(W)}
     return W,d
 
 
