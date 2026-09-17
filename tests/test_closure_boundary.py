@@ -3,45 +3,35 @@ from safesep.dynamic_pair_flow import Probe, decisions, family, cheapest_unresol
 from safesep.closure_boundary import *
 
 
+def W4(): return tuple(f'w{i}' for i in range(4))
+def D4(): return {'w0':'R','w1':'W','w2':'R','w3':'W'}
+
 def test_203_informative_grants_candidate_extension():
-    W=('a','b','c','d'); p=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); assert in_omcas((p,))
+    p=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); assert in_omcas((p,))
 
 def test_204_single_informative_grant_agrees():
-    W=('a','b','c','d'); d={'a':'R','b':'W','c':'R','d':'W'}
-    s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'}))
-    assert omcas_compare(W,d,(s,k))==(True,True)
+    W=W4(); d=D4(); s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k))==(True,True)
 
 def test_205_informative_grant_needed_after_observation():
-    W=('a','b','c','d'); d={'a':'R','b':'W','c':'R','d':'W'}
-    s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'}))
-    assert omcas_compare(W,d,(s,k),frozenset())==(True,True)
+    W=W4(); d=D4(); s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k),frozenset())==(True,True)
 
 def test_206_informative_grant_chain_breaks_naive_extension():
-    # s makes t branch-constant. Exact search may still execute t for its authority
-    # grant; closure-first incorrectly discards t because it no longer informs.
-    W=('a','b','c','d'); d={'a':'R','b':'W','c':'R','d':'W'}
-    s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'}))
-    t=Probe('t',1,('0','0','1','1'),frozenset({'x'}),frozenset({'y'}))
-    k=Probe('k',1,('R','W','R','W'),frozenset({'y'}))
-    assert omcas_compare(W,d,(s,t,k))==(False,True)
+    W=W4(); d=D4(); s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); t=Probe('t',1,('0','0','1','1'),frozenset({'x'}),frozenset({'y'})); k=Probe('k',1,('R','W','R','W'),frozenset({'y'})); assert omcas_compare(W,d,(s,t,k))==(False,True)
 
 def test_207_randomized_boundary_attack_500():
-    rng=random.Random(20260917); W=tuple('abcdef'); d=decisions(3); toks=('x','y','z'); compared=0
+    rng=random.Random(20260917); W=tuple(f'w{i}' for i in range(6)); d=decisions(3); toks=('x','y','z'); compared=0
     for _ in range(500):
         ps=[]
         for j in range(4):
-            outs=tuple(str(rng.randrange(2)) for _ in W)
-            req=frozenset(rng.sample(toks,rng.randrange(0,2)))
-            grant=frozenset({rng.choice(toks)}) if rng.random()<.55 else frozenset()
-            ps.append(Probe('p'+str(j),1,outs,req,grant))
+            outs=tuple(str(rng.randrange(2)) for _ in W); req=frozenset(rng.sample(toks,rng.randrange(0,2))); grant=frozenset({rng.choice(toks)}) if rng.random()<.55 else frozenset(); ps.append(Probe('p'+str(j),1,outs,req,grant))
         omcas_compare(W,d,tuple(ps)); compared+=1
     assert compared==500
 
 def test_208_candidate_action_order_invariance_on_agreeing_case():
-    W=('a','b','c','d'); d={'a':'R','b':'W','c':'R','d':'W'}; s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k))==omcas_compare(W,d,(k,s))
+    W=W4(); d=D4(); s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k))==omcas_compare(W,d,(k,s))
 
 def test_209_candidate_world_order_invariance_on_agreeing_case():
-    W=('a','b','c','d'); d={'a':'R','b':'W','c':'R','d':'W'}; s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k))==(True,True)
+    W=W4(); d=D4(); s=Probe('s',1,('0','0','1','1'),grants=frozenset({'x'})); k=Probe('k',1,('R','W','R','W'),frozenset({'x'})); assert omcas_compare(W,d,(s,k))==(True,True)
 
 def test_210_hidden_grant_exact_blocks():
     W,d,p=smallest_hidden_grant_counterexample(); assert exact_belief_resolves(W,d,p) is False
@@ -88,11 +78,7 @@ def test_223_cheapest_unresolved_200_preserved():
 def test_224_cheapest_unresolved_10000_preserved():
     W,d,p=family(5000,True); x=cheapest_unresolved(W,d,p); assert (x['name'],x['cost'],x['worst_incompatible_pairs'])==('q',1,24995000)
 
-def test_225_positive_boundary_narrowed():
-    # A single known informative grant may be harmless, but unrestricted
-    # informative grants are not an exact extension (Test 206).
-    assert True
+def test_225_positive_boundary_narrowed(): assert True
 
 def test_226_negative_boundary_statement():
-    # Hidden world-dependent grants and revocation each have a two-world counterexample.
     W,d,p=smallest_hidden_grant_counterexample(); W2,d2,p2,T=smallest_revocation_counterexample(); assert len(W)==len(W2)==2
