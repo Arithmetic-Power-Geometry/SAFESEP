@@ -1,0 +1,6 @@
+worlds,n_per_decision,cheapest_unresolved,cost,worst_incompatible_pairs,certificate_class
+200,100,q,1,9900,MCAS
+1000,500,q,1,249500,MCAS
+2000,1000,q,1,999000,MCAS
+5000,2500,q,1,6247500,MCAS
+10000,5000,q,1,24995000,MCAS
