@@ -1,0 +1,9 @@
+case,worlds,status,cheapest_experiment,cost,worst_incompatible_pairs,semantics
+open_dynamic,200,resolvable,q,1,9900,controlled_full_counterfactual
+open_dynamic,1000,resolvable,q,1,249500,controlled_full_counterfactual
+open_dynamic,2000,resolvable,q,1,999000,controlled_full_counterfactual
+open_dynamic,5000,resolvable,q,1,6247500,controlled_full_counterfactual
+open_dynamic,10000,resolvable,q,1,24995000,controlled_full_counterfactual
+hidden_world_dependent_grant,2,obstructed,,,1,controlled_exact_belief
+revocation_counterexample,2,resolvable_by_skipping_revoker,,,1,controlled_exact_belief
+authbench_public,120,external_validity_only,,,,real_permission_labels_no_counterfactual_authority_transitions
