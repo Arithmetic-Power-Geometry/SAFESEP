@@ -1,0 +1,5 @@
+worlds,cheapest_experiment,cost,worst_remaining_incompatible_pairs
+200,q,1,9900
+1000,q,1,249500
+5000,q,1,6247500
+10000,q,1,24995000
