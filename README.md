@@ -56,9 +56,14 @@ Controlled theorem datasets scale through 10,000 worlds. `closure_exactness_scal
 248. 5,000-world cheapest unresolved regression: 6,247,500 pairs.
 249. 10,000-world cheapest unresolved regression: q, cost 1, 24,995,000 pairs.
 250. Certificate is sufficient, not necessary: rejected instance can still agree.
+251–262. Branch-Relative Authority Closure (BRAC): local-vs-global constancy, fixed-point authority chains, seeded/unseeded cycles, initial/missing authority, action-order invariance, exhaustive 256-system exact comparison, branch-specific authority after observation, and redundant grants.
+263. 200-world cheapest unresolved BRAC regression: q, cost 1, 9,900 pairs.
+264. 1,000-world cheapest unresolved BRAC regression: q, cost 1, 249,500 pairs.
+265. 5,000-world cheapest unresolved BRAC regression: q, cost 1, 6,247,500 pairs.
+266. 10,000-world cheapest unresolved BRAC regression: q, cost 1, 24,995,000 pairs.
 
 ## Current novelty status
-**Do not write the paper yet.** We now have a strongly tested sufficient commutation boundary plus minimal counterexamples outside it. Fresh 2026 work on runtime authorization of acquired resources, agent trust negotiation, authorization envelopes, and dynamic agent authorization further rules out broad claims based on authority acquisition, delegation, provenance, or negotiated scopes. The remaining stop-and-write target is narrower: a decision-neutral authorization commutation theorem with a necessary/sufficient boundary that is not merely established sensing/actuation normal form or trust-negotiation sequencing in different notation.
+**Final stop/write gate in progress.** Tests 251–266 add Branch-Relative Authority Closure (BRAC), which saturates currently observation-constant authority progress after every observation and directly repairs the Test-206 failure mode. We now have a strongly tested sufficient commutation boundary plus minimal counterexamples outside it. Fresh 2026 work on runtime authorization of acquired resources, agent trust negotiation, authorization envelopes, and dynamic agent authorization further rules out broad claims based on authority acquisition, delegation, provenance, or negotiated scopes. The remaining stop-and-write target is narrower: a decision-neutral authorization commutation theorem with a necessary/sufficient boundary that is not merely established sensing/actuation normal form or trust-negotiation sequencing in different notation.
 
 ## Research protocol
 For every significant result: attack prior art; construct witness/counterexample; compare baselines; use real data only when its fields genuinely support the claim; save code/data/results; add permanent regression tests; append this registry; run CI; and preserve scientifically meaningful failures/corrections.
