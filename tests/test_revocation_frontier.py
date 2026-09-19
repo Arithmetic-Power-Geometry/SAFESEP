@@ -20,3 +20,8 @@ def test_multiple_tokens_and_arbitrary_probe_names():
     req = {"p": {"a", "b"}, "q": {"c"}, "r": set()}
     assert not requirement_disjoint_revocation({"b", "z"}, req)
     assert blocking_witnesses({"b", "z"}, req) == {"p": frozenset({"b"})}
+
+
+def test_blocking_witnesses_accepts_one_shot_requirement_iterables():
+    req = {"resolve": iter(["x"])}
+    assert blocking_witnesses({"x"}, req) == {"resolve": frozenset({"x"})}
