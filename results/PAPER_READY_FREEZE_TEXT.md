@@ -148,9 +148,10 @@ emulator using a minimal synthetic package declaring the CAMERA runtime
 permission. The workflow installed the package, established a denied state,
 granted the permission with package-manager tooling, verified the granted
 state, revoked the permission, verified denial again, and uninstalled the
-package. The successful transition is used only as a platform-semantics sanity
-check showing that the experimental harness observes a real authority-state
-change. It is not evidence of an Android vulnerability and does not extend the
+package. The successful transition is preserved by GitHub Actions run 35439323387 and
+artifact provenance recorded in `results/ANDROID_EMULATOR_RUN_RECORD.md`. It is
+used only as a platform-semantics sanity check showing that the experimental
+harness observes a real authority-state change. It is not evidence of an Android vulnerability and does not extend the
 BRAC theorem to revocation; indeed, revocation is deliberately outside the
 monotone completeness assumptions.
 
