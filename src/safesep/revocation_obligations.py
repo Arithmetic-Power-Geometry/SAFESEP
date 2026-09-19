@@ -28,11 +28,7 @@ def obligation_quotient_resolves(
     probes: tuple[RevProbe, ...],
     authority: frozenset[str],
 ) -> bool:
-    """Exact recursion on decision-incompatible pair obligations.
-
-    Same-decision worlds that occur in no incompatible pair are discarded because
-    resolution asks only whether the required decision is uniquely determined.
-    """
+    """Exact recursion on decision-incompatible pair obligations."""
 
     @lru_cache(maxsize=None)
     def solve(P: frozenset[Pair], A: frozenset[str], unused: tuple[int, ...]) -> bool:
@@ -55,7 +51,12 @@ def obligation_quotient_resolves(
                 )
                 if child_pairs:
                     children.append(child_pairs)
-            if not children and A2 == A:
+
+            # Progress occurs if the observation removes at least one unresolved
+            # obligation OR authority changes.  In particular, children == []
+            # means the probe resolved every obligation and must be accepted.
+            surviving = frozenset(pair for child in children for pair in child)
+            if surviving == P and A2 == A:
                 continue
             if all(solve(child, A2, remaining) for child in children):
                 return True
