@@ -59,3 +59,17 @@ def test_exhaustive_three_world_two_probe_semantics():
                 assert poly==exact==brac
                 checked += 1
     assert checked==6144
+
+
+def test_decision_labels_are_not_reserved_strings():
+    W=("w0","w1","w2")
+    d={"w0":"READ","w1":"WRITE","w2":"DELETE"}
+    none=()
+    assert not pairwise_resolvable(W,d,none)
+    assert not exact_resolves(W,d,none)
+    assert not brac_resolves(W,d,none)
+
+    identify=P("identify",("0","1","2"))
+    assert pairwise_resolvable(W,d,(identify,))
+    assert exact_resolves(W,d,(identify,))
+    assert brac_resolves(W,d,(identify,))
