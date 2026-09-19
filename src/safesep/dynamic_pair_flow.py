@@ -28,8 +28,17 @@ def decisions(n):
 
 
 def incompatible_pair_count(C, d):
-    r=sum(d[w]=="R" for w in C); z=len(C)-r
-    return r*z
+    """Count unordered world pairs requiring different decisions.
+
+    Decision labels are semantic values, not reserved strings.  This therefore
+    works for any finite decision alphabet, including more than two decisions.
+    """
+    C=tuple(C)
+    return sum(
+        d[u] != d[v]
+        for i,u in enumerate(C)
+        for v in C[i+1:]
+    )
 
 
 def branchwise_legitimate(e, tokens):
