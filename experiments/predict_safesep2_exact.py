@@ -8,7 +8,7 @@ HERE=Path(__file__).resolve().parent
 
 def _load():
     spec=importlib.util.spec_from_file_location("controlled",HERE/"run_safesep2_controlled.py")
-    m=importlib.util.module_from_spec(spec); spec.loader.exec_module(m); return m
+    m=importlib.util.module_from_spec(spec); import sys; sys.modules[spec.name]=m; spec.loader.exec_module(m); return m
 
 def exact_predictions():
     m=_load(); out={}
