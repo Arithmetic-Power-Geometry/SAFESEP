@@ -8,7 +8,7 @@ user data, bypass a security control, or claim an Android vulnerability.
 
 ## Synthetic package
 
-The repository builds a manifest-only package,
+The repository builds a minimal synthetic code-bearing package,
 `org.safesep.probe`, declaring the runtime `CAMERA` permission.
 
 ## Sequence
