@@ -17,3 +17,4 @@ jobs:
       - run: python -m pip install -e . pytest
       - run: python -m pytest -q
       - run: python scripts/wi_brac_census.py
+      - run: python scripts/wi_brac_random_census.py
