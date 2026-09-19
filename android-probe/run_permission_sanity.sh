@@ -5,17 +5,27 @@ PKG="org.safesep.probe"
 PERM="android.permission.CAMERA"
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 OUT="$ROOT/out"
-mkdir -p "$OUT"
+rm -rf "$OUT"
+mkdir -p "$OUT/classes" "$OUT/dex"
 
 AAPT2="$(find "$ANDROID_HOME/build-tools" -type f -name aapt2 | sort -V | tail -1)"
 APKSIGNER="$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -1)"
+D8="$(find "$ANDROID_HOME/build-tools" -type f -name d8 | sort -V | tail -1)"
 ANDROID_JAR="$ANDROID_HOME/platforms/android-35/android.jar"
 
 test -x "$AAPT2"
 test -x "$APKSIGNER"
+test -x "$D8"
 test -f "$ANDROID_JAR"
 
 "$AAPT2" link   -o "$OUT/probe-unsigned.apk"   -I "$ANDROID_JAR"   --manifest "$ROOT/AndroidManifest.xml"
+
+javac -source 8 -target 8 -d "$OUT/classes" "$ROOT/Marker.java"
+"$D8" --output "$OUT/dex" "$OUT/classes/org/safesep/probe/Marker.class"
+(
+  cd "$OUT/dex"
+  zip -q -u "$OUT/probe-unsigned.apk" classes.dex
+)
 
 keytool -genkeypair -noprompt   -keystore "$OUT/test.keystore"   -storepass safesep -keypass safesep   -alias safesep -keyalg RSA -keysize 2048 -validity 1   -dname "CN=SAFESEP Synthetic Test" >/dev/null 2>&1
 
