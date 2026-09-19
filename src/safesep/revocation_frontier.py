@@ -22,8 +22,9 @@ def blocking_witnesses(
 ) -> dict[str, frozenset[str]]:
     """Return probes whose requirements intersect the proposed revocation."""
     r = frozenset(revoked)
-    return {
-        probe: frozenset(reqs) & r
-        for probe, reqs in remaining_requirements.items()
-        if frozenset(reqs) & r
-    }
+    blocked: dict[str, frozenset[str]] = {}
+    for probe, reqs in remaining_requirements.items():
+        intersection = frozenset(reqs) & r
+        if intersection:
+            blocked[probe] = intersection
+    return blocked
