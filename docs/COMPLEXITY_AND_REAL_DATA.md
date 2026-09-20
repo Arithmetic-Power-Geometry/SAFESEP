@@ -1,40 +1,33 @@
-# SAFESEP-EXISTS: exact algorithm, complexity boundary, and real-data plan
+# SAFESEP complexity and data boundary
 
-Copyright (C) 2026 Mohammad Amir Khusru Akhtar
+**Copyright © 2026 Mohammad Amir Khusru Akhtar**
 
-## Decision problem
+## Exact finite recursion
 
-`SAFESEP-EXISTS(P)` asks whether a finite explicit instance admits any branchwise safely admissible adaptive experiment tree whose leaves are authorization-decision homogeneous.
+For finite explicit instances, SAFESEP V1 computes resolvability using exact joint-state recursion over compatible-world sets and authority states. This is the reference semantics used throughout the computational evaluation.
 
-## Exact upper bound
+The published paper does not claim a complete complexity classification for the general framework. A formal complexity classification beyond the executable finite-state recursion is left for future work.
 
-For `N=|W|` explicit worlds there are at most `2^N` knowledge subsets. For each subset the exact fixed-point/AND-OR solver examines each experiment, checks universal admissibility, partitions the subset by outcomes, and requires every resulting child to be winning. Thus a direct memoized implementation gives an exponential-time upper bound in the number of explicit worlds (polynomial work per visited subset).
+## Controlled theorem data
 
-This is an algorithmic upper bound, not a hardness theorem. We do not infer EXPTIME-hardness, PSPACE-hardness, or NP-hardness from the exponential algorithm.
+The theorem-level experiments require explicit counterfactual semantics: for each world and probe, the implementation must know observation behavior, branchwise legitimacy, and authority transition.
 
-The existence question is distinct from minimum-cost SafeSep optimization. Existing adaptive-testing literature already contains NP/PSPACE hardness results for related extensional adaptive-testing variants, so any SAFESEP hardness claim requires a reduction for the exact SAFESEP model rather than inheritance by analogy.
+The V1 computational artifact reports:
+- 266 permanent tests;
+- 256 exhaustive four-world outcome systems;
+- 1,250 deterministic randomized certified comparisons; and
+- controlled scaling up to 10,000 worlds.
 
-## Prior-art comparison
+## Real authorization data
 
-When all experiments are universally admissible, the authorization-specific constraint disappears and the target reduces to decision/equivalence-class determination. Related adaptive-testing work also studies minimum strategies that decide correct-versus-incorrect without identifying the exact underlying implementation. Therefore neither decision-relative stopping nor generic adaptive-test hardness is claimed as novel.
+Public authorization datasets are useful for external-validity context but generally do not provide the counterfactual world-by-probe semantics required for direct theorem evaluation.
 
-SAFESEP's candidate contribution remains the coupling in which the still-compatible worlds determine whether the next evidence action is itself authorized.
+AuthBench is therefore used only as a real authorization benchmark establishing the practical relevance of permission reasoning. Missing counterfactual legitimacy or authority-transition labels are not fabricated.
 
-## Real large authorization data
+## Published boundary
 
-A focused search identified public empirical/real-world authorization resources, but they do not directly contain SAFESEP latent-world counterfactuals (`O_e(w)` and `Adm(e,w)` for every possible world). Examples include:
+The V1 theorem results are restricted to monotone, world-independent authority effects. Revocation and world-dependent grants are explicit counterexamples and are not covered by BRAC's published soundness result.
 
-- the Amazon employee access challenge used in published access-control research: 32,769 authorization records, 9,560 users, 7,517 resources in a recent published characterization;
-- AuthBench, which supplies agent tasks with gold read/write/execute permission annotations and replay under policy constraints;
-- recent real-world serverless studies that analyze IAM policies from hundreds of AWS Lambda applications.
+## Citation
 
-These are valuable external-validity sources, but converting an ordinary allow/deny row into a SAFESEP possible-world experiment system without a declared mapping would fabricate missing counterfactual semantics. The repository therefore keeps two layers separate:
-
-1. **controlled SAFESEP theorem benchmarks**, where latent worlds and probe admissibility are fully known; and
-2. **empirical authorization datasets**, used only for quantities actually present in the source (decisions, permissions, actions, policy structure) until a defensible SAFESEP adapter is specified.
-
-This boundary is intentional research hygiene, not a limitation to hide.
-
-## Current result
-
-The exact existence solver is now independently tested against the minimum-cost solver on the core examples and on the parameterized matched family. It verifies that the finite/infinite distinction is a property of existence itself, not an artifact of cost arithmetic.
+Akhtar, M. A. K. (2026). *Safe Separability for Autonomous Authorization: Branch-Relative Authority Closure Under Decision-Critical Uncertainty* (Version V1). Zenodo. https://doi.org/10.5281/zenodo.22828708
