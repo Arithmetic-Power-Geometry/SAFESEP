@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the SAFESEP V1 paper."
+title: "SAFESEP — Safe Separability for Autonomous Authorization"
+type: software
+authors:
+  - family-names: "Akhtar"
+    given-names: "Mohammad Amir Khusru"
+    orcid: "https://orcid.org/0000-0002-3432-4199"
+version: "V1"
+date-released: "2026-09-20"
+doi: "10.5281/zenodo.22828708"
+url: "https://github.com/Arithmetic-Power-Geometry/SAFESEP"
+repository-code: "https://github.com/Arithmetic-Power-Geometry/SAFESEP"
+preferred-citation:
+  type: article
+  authors:
+    - family-names: "Akhtar"
+      given-names: "Mohammad Amir Khusru"
+      orcid: "https://orcid.org/0000-0002-3432-4199"
+  title: "Safe Separability for Autonomous Authorization: Branch-Relative Authority Closure Under Decision-Critical Uncertainty"
+  year: 2026
+  doi: "10.5281/zenodo.22828708"
+  url: "https://doi.org/10.5281/zenodo.22828708"
