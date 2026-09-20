@@ -1,77 +1,30 @@
-# Manuscript freeze patch after BRAC completeness pass
+# SAFESEP manuscript alignment record
 
-Do not freeze the current PDF unchanged. Apply these corrections first.
+This file previously contained pre-publication manuscript instructions. Those instructions are no longer current.
 
-## 1. Replace the current one-directional BRAC theorem
+The authoritative published record is:
 
-Current manuscript Theorem 2 proves closure soundness and then reports empirical
-agreement. Replace/extend it with the restricted completeness result:
+Akhtar, M. A. K. (2026). *Safe Separability for Autonomous Authorization: Branch-Relative Authority Closure Under Decision-Critical Uncertainty* (Version V1). Zenodo. https://doi.org/10.5281/zenodo.22828708
 
-**Theorem (BRAC exactness in the monotone world-independent Probe model).**
-Assume finite worlds and probes, world-independent token requirements and
-grants, monotone token addition, no revocation, and observations that only
-refine the compatible-world branch. Then BRAC resolves an initial joint state
-if and only if exact joint-state search resolves it.
+## Published theorem scope
 
-The proof may be given through the monotone pair-separation characterization in
-`results/BRAC_COMPLETENESS_AND_COMPLEXITY.md`.
+The paper states:
+- exact joint knowledge-authority recursion as the reference semantics;
+- MCAS closure exactness for the restricted monotone class;
+- explicit counterexamples for informative authority changes, world-dependent grants, and revocation;
+- BRAC as a branch-relative normalization;
+- BRAC soundness under monotone, world-independent authority effects with no revocation; and
+- computational agreement with exact joint-state search in the tested monotone, world-independent model.
 
-## 2. Add the polynomial resolvability corollary
+The published paper does **not** claim the stronger unpublished pair-separation completeness theorem, a polynomial-time boolean resolvability theorem, or a 6,144-system exhaustive battery. Those pre-publication proposals must not be treated as claims of the V1 paper.
 
-For the explicit finite representation, compute the least authority-reachable
-token closure T*. Let E* contain all probes enabled by T*. Safe boolean
-resolvability holds iff every pair of compatible worlds with different required
-decisions is separated by at least one probe in E*.
+## Published validation
 
-State clearly that this is polynomial-time checkable in the explicit input
-representation.
+The V1 paper reports:
+- 266 permanent tests;
+- 256 exhaustive four-world systems;
+- 1,250 deterministic randomized certified comparisons;
+- controlled stress up to 10,000 worlds; and
+- CI across Python 3.10–3.12.
 
-## 3. Correct the complexity discussion
-
-Do not transfer the 2-EXPTIME result for general partial-observability
-conditional planning to this restricted SAFESEP decision problem.
-
-Separate:
-- **boolean resolvability in current monotone Probe model:** polynomial;
-- **cost-optimal adaptive tree:** retains classical optimal decision-tree
-  hardness as a special case;
-- **richer semantics with revocation/world-dependent effects:** complexity left
-  open unless separately proved.
-
-## 4. Update experimental count
-
-Add the new 6,144-system exhaustive battery comparing:
-- polynomial pair criterion,
-- exact joint-state search,
-- BRAC.
-
-Do not replace the earlier 256-system experiment; report the new battery as a
-stronger independent falsification layer.
-
-## 5. Tighten novelty language
-
-Explicitly acknowledge:
-- complete contingent/sensing planners;
-- monotonic trust-negotiation completeness;
-- protected credential disclosure and cyclic dependencies;
-- authorization credential gathering;
-- optimal decision-tree hardness.
-
-Retain novelty only at the authorization-specific SAFESEP/BRAC formulation and
-its proved restricted characterization/boundary.
-
-## 6. Android empirical status
-
-Do not claim Android empirical validation until the emulator workflow has
-actually executed successfully. A permission-state grant/revoke experiment is a
-platform-semantics sanity check, not evidence of an Android vulnerability and
-not a proof of SAFESEP novelty.
-
-## Freeze condition
-
-Freeze the paper only after:
-1. theorem CI is green;
-2. the 6,144-system exhaustive comparison is green;
-3. Android emulator sanity workflow is green or explicitly moved to future
-   work;
-4. manuscript theorem/complexity/novelty text is updated consistently.
+For current claims, counts, limitations, and citation, use the published paper and repository README.
