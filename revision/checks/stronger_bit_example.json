@@ -1,0 +1,121 @@
+{
+  "status": "independent eight-world illustration; separate from historical stronger-bit experiments",
+  "worlds": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "decisions": {
+    "0": "R",
+    "1": "W",
+    "2": "R",
+    "3": "W",
+    "4": "R",
+    "5": "W",
+    "6": "R",
+    "7": "W"
+  },
+  "costs": {
+    "q": 1,
+    "bit0": 1
+  },
+  "requirements": {
+    "q": [],
+    "bit0": []
+  },
+  "grants": {
+    "q": [],
+    "bit0": []
+  },
+  "probes": {
+    "q": {
+      "isolated": {
+        "worlds": [
+          0
+        ],
+        "R": 1,
+        "W": 0,
+        "incompatible_pairs": 0
+      },
+      "other": {
+        "worlds": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "R": 3,
+        "W": 4,
+        "incompatible_pairs": 12
+      }
+    },
+    "bit0": {
+      "0": {
+        "worlds": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "R": 2,
+        "W": 2,
+        "incompatible_pairs": 4
+      },
+      "1": {
+        "worlds": [
+          4,
+          5,
+          6,
+          7
+        ],
+        "R": 2,
+        "W": 2,
+        "incompatible_pairs": 4
+      }
+    }
+  },
+  "worst_pairs": {
+    "q": 12,
+    "bit0": 4
+  },
+  "table1_recalculated": [
+    {
+      "worlds": 200,
+      "n": 100,
+      "q_cost": 1,
+      "worst_pairs": 9900
+    },
+    {
+      "worlds": 1000,
+      "n": 500,
+      "q_cost": 1,
+      "worst_pairs": 249500
+    },
+    {
+      "worlds": 2000,
+      "n": 1000,
+      "q_cost": 1,
+      "worst_pairs": 999000
+    },
+    {
+      "worlds": 5000,
+      "n": 2500,
+      "q_cost": 1,
+      "worst_pairs": 6247500
+    },
+    {
+      "worlds": 10000,
+      "n": 5000,
+      "q_cost": 1,
+      "worst_pairs": 24995000
+    }
+  ]
+}

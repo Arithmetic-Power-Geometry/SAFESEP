@@ -1,0 +1,60 @@
+{
+  "run_date": "2026-11-12",
+  "local_python": "3.13.5",
+  "independent_oracle": {
+    "seed": 20261112,
+    "world_counts": [
+      2,
+      3,
+      4
+    ],
+    "iterations_per_world_count": 1600,
+    "exact_vs_brac": {
+      "comparisons": 4800,
+      "disagreements": 0
+    },
+    "exact_vs_mcas": {
+      "comparisons": 4800,
+      "disagreements": 0
+    },
+    "four_world_witness": {
+      "exact": true,
+      "brac": true,
+      "naive_sensor_only": false
+    }
+  },
+  "diagnostic_eight_world": {
+    "worlds": 8,
+    "cost_q": 1,
+    "cost_bit0": 1,
+    "worst_pairs_q": 12,
+    "worst_pairs_bit0": 4
+  },
+  "controlled_family": [
+    {
+      "worlds": 200,
+      "worst_pairs": 9900
+    },
+    {
+      "worlds": 1000,
+      "worst_pairs": 249500
+    },
+    {
+      "worlds": 2000,
+      "worst_pairs": 999000
+    },
+    {
+      "worlds": 5000,
+      "worst_pairs": 6247500
+    },
+    {
+      "worlds": 10000,
+      "worst_pairs": 24995000
+    }
+  ],
+  "notes": [
+    "Independent finite scripts executed in the local Python runtime; not a replay of archived GitHub Actions.",
+    "The eight-world stronger-bit illustration is newly specified, not the historical stronger-bit dataset.",
+    "Comparisons are model instances, not distinct pytest test functions."
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "repository": "Arithmetic-Power-Geometry/SAFESEP",
+  "historical_tests": {
+    "workflow": "tests",
+    "run_number": 210,
+    "run_id": 35328293388,
+    "created_at_utc": "2026-09-18T09:12:07Z",
+    "commit": "2f63cb78ceb51f2cd801f9ef9ed055b6efd263c4",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "python": "3.10",
+        "job_id": 105546444194,
+        "conclusion": "success",
+        "pytest_step": "success",
+        "benchmark_step": "success"
+      },
+      {
+        "python": "3.11",
+        "job_id": 105546444375,
+        "conclusion": "success",
+        "pytest_step": "success",
+        "benchmark_step": "success"
+      },
+      {
+        "python": "3.12",
+        "job_id": 105546444426,
+        "conclusion": "success",
+        "pytest_step": "success",
+        "benchmark_step": "success"
+      }
+    ],
+    "url": "https://github.com/Arithmetic-Power-Geometry/SAFESEP/actions/runs/35328293388"
+  },
+  "later_tests": {
+    "workflow": "tests",
+    "run_number": 382,
+    "run_id": 35492230097,
+    "created_at_utc": "2026-09-20T05:39:29Z",
+    "commit": "a157123487f92c0657be11fd24dbe7322a04d622",
+    "conclusion": "success",
+    "python_matrix": [
+      "3.10",
+      "3.11",
+      "3.12"
+    ],
+    "url": "https://github.com/Arithmetic-Power-Geometry/SAFESEP/actions/runs/35492230097"
+  },
+  "later_brac_completeness": {
+    "workflow": "BRAC completeness",
+    "run_number": 157,
+    "run_id": 35492230090,
+    "created_at_utc": "2026-09-20T05:39:29Z",
+    "commit": "a157123487f92c0657be11fd24dbe7322a04d622",
+    "conclusion": "success",
+    "python": "3.12",
+    "url": "https://github.com/Arithmetic-Power-Geometry/SAFESEP/actions/runs/35492230090"
+  },
+  "interpretation": "Archived workflow records verified via GitHub Actions metadata and job logs. The present independent scripts were not part of those historical CI jobs."
+}
